@@ -121,12 +121,12 @@ const Register = () => {
 
     if (search !== "") {
       const filtered = data.getSchools.filter((item) =>
-        item.name.toLowerCase().includes(search.toLowerCase())
+        item.school_name.toLowerCase().includes(search.toLowerCase())
       );
 
       setSearchSchool(filtered);
       setShowSchools(true);
-      console.log(filtered);
+      console.log(data.getSchools);
     } else {
       setSearchSchool([]);
     }
@@ -226,7 +226,7 @@ const Register = () => {
                     {selectedGrade.length > 0
                       ? selectedGrade.length > 3
                         ? selectedGrade.slice(0, 3).join(", ") +
-                          `, +${selectedGrade.length - 3} more`
+                        `, +${selectedGrade.length - 3} more`
                         : selectedGrade.join(", ")
                       : "Select"}
                   </span>
@@ -276,7 +276,7 @@ const Register = () => {
                     {selectedSubject.length > 0
                       ? selectedSubject.length > 3
                         ? selectedSubject.slice(0, 3).join(", ") +
-                          `, +${selectedSubject.length - 3} more`
+                        `, +${selectedSubject.length - 3} more`
                         : selectedSubject.join(", ")
                       : "Select"}
                   </span>
