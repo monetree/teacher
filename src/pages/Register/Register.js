@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { schools } from "../../data";
 import "./Register.css";
 
 import { useQuery, useMutation, gql } from "@apollo/client";
 
 const Register = () => {
+
+  // form value's state
+
   const [firstName, setFirstname] = useState(null);
   const [lastName, setLastname] = useState(null);
   const [email, setEmail] = useState(null);
@@ -13,7 +17,57 @@ const Register = () => {
   const [subject, setSubject] = useState(null);
   const [school, setSchool] = useState(null);
 
+  // search school states and refs
+  const schoolRef = React.useRef();
+  const [showSchools, setShowSchools] = useState(false);
+  const [searchSchool, setSearchSchool] = useState([]);
+
+  // dropdown
+  const [selectedGrade, setSelectedGrade] = useState([]);
+  const [gradeDropdown, setGradeDropdown] = useState(false);
+
+  const [selectedSubject, setSelectedSubject] = useState([]);
+  const [subjectDropdown, setSubjectDropdown] = useState(false);
+
+
+  // navigator
   const navigate = useNavigate();
+
+
+  // search school by name
+  const handleSchoolSearch = () => {
+    const search = schoolRef.current.value;
+
+    if (search !== '') {
+      const filtered = schools.filter(item => item.name.toLowerCase().includes(search.toLowerCase()));
+      setSearchSchool(filtered);
+      setShowSchools(true);
+      console.log(filtered);
+    } else {
+      setSearchSchool([]);
+    }
+  }
+
+  const handleGradeCheck = (event) => {
+    if (event.target.checked) {
+      const newSelectedGrade = selectedGrade.concat(event.target.value);
+      setSelectedGrade(newSelectedGrade);
+    } else {
+      const newSelectedGrade = selectedGrade.filter(item => item !== event.target.value);
+      setSelectedGrade(newSelectedGrade);
+    }
+  }
+
+  const handleSubjectCheck = (event) => {
+    if (event.target.checked) {
+      const newSelectedSubject = selectedSubject.concat(event.target.value);
+      setSelectedSubject(newSelectedSubject);
+    } else {
+      const newSelectedSubject = selectedSubject.filter(item => item !== event.target.value);
+      setSelectedSubject(newSelectedSubject);
+    }
+  }
+
 
   const QUERIES = gql`
     query {
@@ -73,8 +127,8 @@ const Register = () => {
     useMutation(MUTATIONS);
 
   /*
-		on submission, call the function createTeacher({variables: {firstName, lastName}})
-	*/
+    on submission, call the function createTeacher({variables: {firstName, lastName}})
+  */
 
   return (
     <section className="register__page min-vh-100 d-flex justify-content-center align-items-center">
@@ -122,7 +176,30 @@ const Register = () => {
             <label htmlFor="school">School</label>
             <div className="d-flex align-items-center">
               <ion-icon name="search-outline"></ion-icon>
-              <input list="schools" type="text" id="schools" />
+              <input ref={schoolRef} onChange={handleSchoolSearch} list="schools" type="text" id="schools" />
+              {
+                showSchools && (
+                  searchSchool.length > 0 && (
+                    <div className="school-list">
+                      <ul>
+                        {
+                          searchSchool.map(item => (
+                            <li
+                              key={item.id}
+                              onClick={() => {
+                                schoolRef.current.value = item.name;
+                                setShowSchools(false);
+                              }}
+                            >
+                              {item.name}
+                            </li>
+                          ))
+                        }
+                      </ul>
+                    </div>
+                  )
+                )
+              }
             </div>
           </div>
 
@@ -130,39 +207,86 @@ const Register = () => {
             <div className="grades w-50 d-flex flex-column">
               <label htmlFor="grades">Grades</label>
 
-              {data && data.getGrades ? (
-                <select onChange={(e) => setGrade(e.target.value)}>
-                  <option value="">Select</option>
-                  {data.getGrades.map((grade, index) => (
-                    <option value={grade.id} key={index}>
-                      {grade.grade_info}
-                    </option>
-                  ))}
-                </select>
-              ) : (
-                <select>
-                  <option value="">Select</option>
-                </select>
-              )}
+              <div className="grade-dropdown">
+                <div className="selected d-flex justify-content-between align-items-center" onClick={() => setGradeDropdown(!gradeDropdown)}>
+                  <span title={
+                    selectedGrade.length > 0 ? (
+                      selectedGrade.length > 3 ? selectedGrade.join(", ") : ''
+                    ) : ''
+                  }>
+                    {
+                      selectedGrade.length > 0 ? (
+                        selectedGrade.length > 3 ? (
+                          selectedGrade.slice(0, 3).join(", ") + `, +${selectedGrade.length - 3} more`
+                        ) : (
+                          selectedGrade.join(", ")
+                        )
+                      ) : "Select"
+                    }
+                  </span>
+                  <ion-icon name="chevron-down-outline"></ion-icon>
+                </div>
+                <ul className={gradeDropdown ? "grade-items show" : "grade-items"}>
+                  {data && data.getGrades ? (
+                    data.getGrades.map((grade, index) => (
+                      <li key={index} className="grade-item">
+                        <input
+                          type="checkbox"
+                          id={`gradeID${grade.id}`}
+                          value={grade.grade_info}
+                          onChange={handleGradeCheck}
+                        />
+                        <label htmlFor={`gradeID${grade.id}`}>{grade.grade_info}</label>
+                      </li>
+                    ))
+                  ) : (
+                    <li>Select</li>
+                  )}
+                </ul>
+              </div>
             </div>
 
             <div className="grades w-50 d-flex flex-column">
               <label htmlFor="grades">Subjects</label>
 
-              {data && data.getSubjects ? (
-                <select onChange={(e) => setSubject(e.target.value)}>
-                  <option value="">Select</option>
-                  {data.getSubjects.map((subject, index) => (
-                    <option value={subject.id} key={index}>
-                      {subject.subject_info}
-                    </option>
-                  ))}
-                </select>
-              ) : (
-                <select>
-                  <option value="">Select</option>
-                </select>
-              )}
+              <div className="subject-dropdown">
+                <div className="selected d-flex justify-content-between align-items-center" onClick={() => setSubjectDropdown(!subjectDropdown)}>
+                  <span title={
+                    selectedSubject.length > 0 ? (
+                      selectedSubject.length > 3 ? selectedSubject.join(', ') : ''
+                    ) : ''
+                  }>
+                    {
+                      selectedSubject.length > 0 ? (
+                        selectedSubject.length > 3 ? (
+                          selectedSubject.slice(0, 3).join(", ") + `, +${selectedSubject.length - 3} more`
+                        ) : (
+                          selectedSubject.join(", ")
+                        )
+                      ) : "Select"
+                    }
+                  </span>
+                  <ion-icon name="chevron-down-outline"></ion-icon>
+                </div>
+
+                <ul className={subjectDropdown ? "subject-items show" : "subject-items"}>
+                  {data && data.getSubjects ? (
+                    data.getSubjects.map((subject, index) => (
+                      <li key={index} className="subject-item">
+                        <input
+                          type="checkbox"
+                          id={`subjectID${subject.id}`}
+                          value={subject.subject_info}
+                          onChange={handleSubjectCheck}
+                        />
+                        <label htmlFor={`subjectID${subject.id}`}>{subject.subject_info}</label>
+                      </li>
+                    ))
+                  ) : (
+                    <li>Select</li>
+                  )}
+                </ul>
+              </div>
             </div>
           </div>
 

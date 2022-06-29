@@ -43,7 +43,14 @@ const Dashboard = () => {
                                 <ul>
                                     {
                                         searched.map(item => (
-                                            <li key={item.id} className="searched__item">
+                                            <li
+                                                key={item.id}
+                                                className="searched__item"
+                                                onClick={() => {
+                                                    searchRef.current.value = item.name;
+                                                    setSearched([]);
+                                                }}
+                                            >
                                                 <div className="info">
                                                     <h6 className='m-0'>{item.name}</h6>
                                                     <div>

@@ -28,3 +28,32 @@ export const assessments = [
     status: "Draft",
   },
 ];
+
+
+export const schools = [
+  {
+    id: 1,
+    name: "School 1",
+    address: "123 Main St",
+  },
+  {
+    id: 2,
+    name: "School 2",
+    address: "456 Main St",
+  },
+  {
+    id: 3,
+    name: "School 3",
+    address: "789 Main St",
+  },
+  {
+    id: 4,
+    name: "School 4",
+    address: "1011 Main St",
+  },
+  {
+    id: 5,
+    name: "School 5",
+    address: "1213 Main St",
+  }
+];
