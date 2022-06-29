@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { schools } from "../../data";
 import "./Register.css";
 
 import { useQuery, useMutation, gql } from "@apollo/client";
 
 const Register = () => {
-
   // form value's state
 
   const [firstName, setFirstname] = useState(null);
@@ -29,45 +27,32 @@ const Register = () => {
   const [selectedSubject, setSelectedSubject] = useState([]);
   const [subjectDropdown, setSubjectDropdown] = useState(false);
 
-
   // navigator
   const navigate = useNavigate();
-
-
-  // search school by name
-  const handleSchoolSearch = () => {
-    const search = schoolRef.current.value;
-
-    if (search !== '') {
-      const filtered = schools.filter(item => item.name.toLowerCase().includes(search.toLowerCase()));
-      setSearchSchool(filtered);
-      setShowSchools(true);
-      console.log(filtered);
-    } else {
-      setSearchSchool([]);
-    }
-  }
 
   const handleGradeCheck = (event) => {
     if (event.target.checked) {
       const newSelectedGrade = selectedGrade.concat(event.target.value);
       setSelectedGrade(newSelectedGrade);
     } else {
-      const newSelectedGrade = selectedGrade.filter(item => item !== event.target.value);
+      const newSelectedGrade = selectedGrade.filter(
+        (item) => item !== event.target.value
+      );
       setSelectedGrade(newSelectedGrade);
     }
-  }
+  };
 
   const handleSubjectCheck = (event) => {
     if (event.target.checked) {
       const newSelectedSubject = selectedSubject.concat(event.target.value);
       setSelectedSubject(newSelectedSubject);
     } else {
-      const newSelectedSubject = selectedSubject.filter(item => item !== event.target.value);
+      const newSelectedSubject = selectedSubject.filter(
+        (item) => item !== event.target.value
+      );
       setSelectedSubject(newSelectedSubject);
     }
-  }
-
+  };
 
   const QUERIES = gql`
     query {
@@ -130,6 +115,23 @@ const Register = () => {
     on submission, call the function createTeacher({variables: {firstName, lastName}})
   */
 
+  // search school by name
+  const handleSchoolSearch = () => {
+    const search = schoolRef.current.value;
+
+    if (search !== "") {
+      const filtered = data.getSchools.filter((item) =>
+        item.name.toLowerCase().includes(search.toLowerCase())
+      );
+
+      setSearchSchool(filtered);
+      setShowSchools(true);
+      console.log(filtered);
+    } else {
+      setSearchSchool([]);
+    }
+  };
+
   return (
     <section className="register__page min-vh-100 d-flex justify-content-center align-items-center">
       <div className="box mx-auto bg-white overflow-hidden d-flex flex-column">
@@ -176,30 +178,30 @@ const Register = () => {
             <label htmlFor="school">School</label>
             <div className="d-flex align-items-center">
               <ion-icon name="search-outline"></ion-icon>
-              <input ref={schoolRef} onChange={handleSchoolSearch} list="schools" type="text" id="schools" />
-              {
-                showSchools && (
-                  searchSchool.length > 0 && (
-                    <div className="school-list">
-                      <ul>
-                        {
-                          searchSchool.map(item => (
-                            <li
-                              key={item.id}
-                              onClick={() => {
-                                schoolRef.current.value = item.name;
-                                setShowSchools(false);
-                              }}
-                            >
-                              {item.name}
-                            </li>
-                          ))
-                        }
-                      </ul>
-                    </div>
-                  )
-                )
-              }
+              <input
+                ref={schoolRef}
+                onChange={handleSchoolSearch}
+                list="schools"
+                type="text"
+                id="schools"
+              />
+              {showSchools && searchSchool.length > 0 && (
+                <div className="school-list">
+                  <ul>
+                    {data.getSchools.map((item) => (
+                      <li
+                        key={item.id}
+                        onClick={() => {
+                          schoolRef.current.value = item.school_name;
+                          setShowSchools(false);
+                        }}
+                      >
+                        {item.school_name}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
 
@@ -208,25 +210,31 @@ const Register = () => {
               <label htmlFor="grades">Grades</label>
 
               <div className="grade-dropdown">
-                <div className="selected d-flex justify-content-between align-items-center" onClick={() => setGradeDropdown(!gradeDropdown)}>
-                  <span title={
-                    selectedGrade.length > 0 ? (
-                      selectedGrade.length > 3 ? selectedGrade.join(", ") : ''
-                    ) : ''
-                  }>
-                    {
-                      selectedGrade.length > 0 ? (
-                        selectedGrade.length > 3 ? (
-                          selectedGrade.slice(0, 3).join(", ") + `, +${selectedGrade.length - 3} more`
-                        ) : (
-                          selectedGrade.join(", ")
-                        )
-                      ) : "Select"
+                <div
+                  className="selected d-flex justify-content-between align-items-center"
+                  onClick={() => setGradeDropdown(!gradeDropdown)}
+                >
+                  <span
+                    title={
+                      selectedGrade.length > 0
+                        ? selectedGrade.length > 3
+                          ? selectedGrade.join(", ")
+                          : ""
+                        : ""
                     }
+                  >
+                    {selectedGrade.length > 0
+                      ? selectedGrade.length > 3
+                        ? selectedGrade.slice(0, 3).join(", ") +
+                          `, +${selectedGrade.length - 3} more`
+                        : selectedGrade.join(", ")
+                      : "Select"}
                   </span>
                   <ion-icon name="chevron-down-outline"></ion-icon>
                 </div>
-                <ul className={gradeDropdown ? "grade-items show" : "grade-items"}>
+                <ul
+                  className={gradeDropdown ? "grade-items show" : "grade-items"}
+                >
                   {data && data.getGrades ? (
                     data.getGrades.map((grade, index) => (
                       <li key={index} className="grade-item">
@@ -236,7 +244,9 @@ const Register = () => {
                           value={grade.grade_info}
                           onChange={handleGradeCheck}
                         />
-                        <label htmlFor={`gradeID${grade.id}`}>{grade.grade_info}</label>
+                        <label htmlFor={`gradeID${grade.id}`}>
+                          {grade.grade_info}
+                        </label>
                       </li>
                     ))
                   ) : (
@@ -250,26 +260,34 @@ const Register = () => {
               <label htmlFor="grades">Subjects</label>
 
               <div className="subject-dropdown">
-                <div className="selected d-flex justify-content-between align-items-center" onClick={() => setSubjectDropdown(!subjectDropdown)}>
-                  <span title={
-                    selectedSubject.length > 0 ? (
-                      selectedSubject.length > 3 ? selectedSubject.join(', ') : ''
-                    ) : ''
-                  }>
-                    {
-                      selectedSubject.length > 0 ? (
-                        selectedSubject.length > 3 ? (
-                          selectedSubject.slice(0, 3).join(", ") + `, +${selectedSubject.length - 3} more`
-                        ) : (
-                          selectedSubject.join(", ")
-                        )
-                      ) : "Select"
+                <div
+                  className="selected d-flex justify-content-between align-items-center"
+                  onClick={() => setSubjectDropdown(!subjectDropdown)}
+                >
+                  <span
+                    title={
+                      selectedSubject.length > 0
+                        ? selectedSubject.length > 3
+                          ? selectedSubject.join(", ")
+                          : ""
+                        : ""
                     }
+                  >
+                    {selectedSubject.length > 0
+                      ? selectedSubject.length > 3
+                        ? selectedSubject.slice(0, 3).join(", ") +
+                          `, +${selectedSubject.length - 3} more`
+                        : selectedSubject.join(", ")
+                      : "Select"}
                   </span>
                   <ion-icon name="chevron-down-outline"></ion-icon>
                 </div>
 
-                <ul className={subjectDropdown ? "subject-items show" : "subject-items"}>
+                <ul
+                  className={
+                    subjectDropdown ? "subject-items show" : "subject-items"
+                  }
+                >
                   {data && data.getSubjects ? (
                     data.getSubjects.map((subject, index) => (
                       <li key={index} className="subject-item">
@@ -279,7 +297,9 @@ const Register = () => {
                           value={subject.subject_info}
                           onChange={handleSubjectCheck}
                         />
-                        <label htmlFor={`subjectID${subject.id}`}>{subject.subject_info}</label>
+                        <label htmlFor={`subjectID${subject.id}`}>
+                          {subject.subject_info}
+                        </label>
                       </li>
                     ))
                   ) : (
