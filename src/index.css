@@ -1,6 +1,35 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&display=swap");
 
 body {
-	background: #f8fafb;
-	font-family: "Nunito", sans-serif;
+  background: #f8fafb;
+  font-family: "Nunito", sans-serif;
+}
+
+.bs-select select {
+  margin-bottom: 10px !important;
+  margin-left: 0 !important;
+}
+
+.table > :not(caption) > * > * {
+  box-shadow: none;
+}
+
+.table-bordered > :not(caption) > * > * {
+  border-width: 0 !important;
+}
+
+.dataTable > thead:nth-child(1) {
+  display: none;
+}
+
+.sr-only {
+  display: none !important;
+}
+
+.page-item.active .page-link {
+  border: 1px solid #0d4b6f !important;
+  background: #fff !important;
+  color: #0d4b6f;
+  border-radius: 4px;
+  font-weight: bold;
 }

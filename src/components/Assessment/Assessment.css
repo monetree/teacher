@@ -1,58 +1,71 @@
+.assessment-card {
+  background: #fff;
+  margin: 10px 0px;
+  padding: 20px;
+  box-shadow: 0px 1px 7px rgba(25, 25, 25, 0.08);
+  border-radius: 8px;
+}
+
 .dataTable {
-	width: 100%;
-	background: #fff;
-	table-layout: fixed;
-	overflow: hidden;
-	border-radius: 8px;
-	box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  background: #fff;
+  table-layout: fixed;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
 }
 
 .dataTable thead {
-	background: #f8fdff;
-	border-bottom: 1px solid #e5e5e5;
+  background: #f8fdff;
+  border-bottom: 1px solid #e5e5e5;
 }
 
 .dataTable th {
-	padding: 1rem 2rem;
-	text-align: left;
-	font-size: 18px;
-	color: #0d4b6f;
-	font-weight: 700;
+  padding: 1rem 2rem;
+  text-align: left;
+  font-size: 18px;
+  color: #0d4b6f;
+  font-weight: 700;
 }
 
 .dataTable th:last-child {
-	text-align: center;
+  text-align: center;
 }
 
 .dataTable td {
-	padding: 1rem 2rem;
+  padding: 1rem 2rem;
 }
 
 .dataTable td:last-child {
-	text-align: center;
+  text-align: center;
 }
 
 .dataTable tr {
-	border-bottom: 1.5px solid #e5e5e5;
+  border-bottom: 1.5px solid #e5e5e5;
+}
+
+.dataTable tr:hover {
+  background: #f8fdff;
+  cursor: pointer;
 }
 
 .dataTable tr:last-child {
-	border-bottom: none;
+  border-bottom: none;
 }
 
 .status span {
-	display: block;
-	width: 130px;
-	margin: auto;
-	text-align: center;
+  display: block;
+  width: 130px;
+  margin: auto;
+  text-align: center;
 }
 
 .status .draft {
-	background: #fff9e4;
-	color: #836717;
+  background: #fff9e4;
+  color: #836717;
 }
 
 .status .complete {
-	background: #e5fde9;
-	color: #158a2a;
+  background: #e5fde9;
+  color: #158a2a;
 }
