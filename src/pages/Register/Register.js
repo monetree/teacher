@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Register.css";
 
@@ -26,6 +26,46 @@ const Register = () => {
 
   const [selectedSubject, setSelectedSubject] = useState([]);
   const [subjectDropdown, setSubjectDropdown] = useState(false);
+
+  const handleCloseSchool = (id) => {
+    setSchool(id);
+    setShowSchools(false);
+  };
+
+  useEffect(() => {
+    let ids = [];
+    if (!data) return;
+    for (let i of data.getGrades) {
+      if (selectedGrade.includes(i.grade_info)) {
+        ids.push(i.id);
+      }
+    }
+
+    setGrade(ids);
+  }, [selectedGrade]);
+
+  useEffect(() => {
+    let ids = [];
+    if (!data) return;
+    for (let i of data.getSubjects) {
+      if (selectedSubject.includes(i.subject_info)) {
+        ids.push(i.id);
+      }
+    }
+    setSubject(ids);
+  }, [selectedSubject]);
+
+  useEffect(() => {
+    if (!data) return;
+    console.log(data.getSchools);
+    if (schoolRef && schoolRef.current) {
+      for (let i of data.getSchools) {
+        // console.log(i);
+        // console.log(schoolRef.current.value);
+      }
+      // setSchool(schoolRef.current.value);
+    }
+  }, [schoolRef]);
 
   // navigator
   const navigate = useNavigate();
@@ -79,15 +119,18 @@ const Register = () => {
       $lastName: String!
       $phone: String!
       $email: String!
+      $grade: [String!]
+      $subject: [String!]
+      $school: String!
     ) {
       createTeacher(
         first_name: $firstName
         last_name: $lastName
         phone: $phone
         email: $email
-        subjectRef: ["6287323efe0b204eee241cc5"]
-        gradeRef: ["62872b8b0023e0dcc9c5a703"]
-        schoolRef: "62ab59edde044d104f10e5a9"
+        subjectRef: $subject
+        gradeRef: $grade
+        schoolRef: $school
       ) {
         id
         first_name
@@ -100,12 +143,6 @@ const Register = () => {
       }
     }
   `;
-
-  const options = [
-    { name: "Swedish", value: "sv" },
-    { name: "English", value: "en" },
-    { name: "Videshi", value: "vi" },
-  ];
 
   const { loading, error, data } = useQuery(QUERIES);
   const [createTeacher, { loading: _loading, error: _error, data: _data }] =
@@ -126,11 +163,12 @@ const Register = () => {
 
       setSearchSchool(filtered);
       setShowSchools(true);
-      console.log(data.getSchools);
     } else {
       setSearchSchool([]);
     }
   };
+
+  console.log(schoolRef && schoolRef.current ? schoolRef.current.value : "");
 
   return (
     <section className="register__page min-vh-100 d-flex justify-content-center align-items-center">
@@ -185,16 +223,14 @@ const Register = () => {
                 type="text"
                 id="schools"
               />
+
               {showSchools && searchSchool.length > 0 && (
                 <div className="school-list">
                   <ul>
                     {data.getSchools.map((item) => (
                       <li
                         key={item.id}
-                        onClick={() => {
-                          schoolRef.current.value = item.school_name;
-                          setShowSchools(false);
-                        }}
+                        onClick={() => handleCloseSchool(item.id)}
                       >
                         {item.school_name}
                       </li>
@@ -226,7 +262,7 @@ const Register = () => {
                     {selectedGrade.length > 0
                       ? selectedGrade.length > 3
                         ? selectedGrade.slice(0, 3).join(", ") +
-                        `, +${selectedGrade.length - 3} more`
+                          `, +${selectedGrade.length - 3} more`
                         : selectedGrade.join(", ")
                       : "Select"}
                   </span>
@@ -276,7 +312,7 @@ const Register = () => {
                     {selectedSubject.length > 0
                       ? selectedSubject.length > 3
                         ? selectedSubject.slice(0, 3).join(", ") +
-                        `, +${selectedSubject.length - 3} more`
+                          `, +${selectedSubject.length - 3} more`
                         : selectedSubject.join(", ")
                       : "Select"}
                   </span>
