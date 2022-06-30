@@ -16,6 +16,7 @@ const Register = () => {
   const [school, setSchool] = useState(null);
 
   // search school states and refs
+  const schoolsRef = React.useRef();
   const schoolRef = React.useRef();
   const [showSchools, setShowSchools] = useState(false);
   const [searchSchool, setSearchSchool] = useState([]);
@@ -33,7 +34,7 @@ const Register = () => {
   // close dropdown on click outside
   useEffect(() => {
     const handleClick = (event) => {
-      if (schoolRef.current && !schoolRef.current.contains(event.target)) {
+      if (schoolsRef.current && !schoolsRef.current.contains(event.target)) {
         setShowSchools(false);
       }
       if (gradesRef.current && !gradesRef.current.contains(event.target)) {
@@ -252,7 +253,7 @@ const Register = () => {
 
           <div className="input-group2 mb-4">
             <label htmlFor="school">School</label>
-            <div className="d-flex align-items-center">
+            <div ref={schoolsRef} className="d-flex align-items-center">
               <ion-icon name="search-outline"></ion-icon>
               <input
                 ref={schoolRef}
@@ -268,7 +269,10 @@ const Register = () => {
                     {data.getSchools.map((item) => (
                       <li
                         key={item.id}
-                        onClick={() => handleCloseSchool(item.id)}
+                        onClick={() => {
+                          handleCloseSchool(item.id);
+                          schoolRef.current.value = item.school_name;
+                        }}
                       >
                         {item.school_name}
                       </li>
