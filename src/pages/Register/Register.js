@@ -29,7 +29,6 @@ const Register = () => {
   const [selectedSubject, setSelectedSubject] = useState([]);
   const [subjectDropdown, setSubjectDropdown] = useState(false);
 
-
   // close dropdown on click outside
   useEffect(() => {
     const handleClick = (event) => {
@@ -42,14 +41,13 @@ const Register = () => {
       if (subjectsRef.current && !subjectsRef.current.contains(event.target)) {
         setSubjectDropdown(false);
       }
-    }
+    };
 
     document.addEventListener("mousedown", handleClick);
     return () => {
       document.removeEventListener("mousedown", handleClick);
-    }
-  }, [])
-
+    };
+  }, []);
 
   const handleCloseSchool = (id) => {
     setSchool(id);
@@ -194,22 +192,19 @@ const Register = () => {
 
   console.log(schoolRef && schoolRef.current ? schoolRef.current.value : "");
 
-
-
   return (
     <section className="register__page min-vh-100 d-flex justify-content-center align-items-center">
       <div className="box mx-auto bg-white overflow-hidden d-flex flex-column">
-
-        {
-          _loading && (
-            <div className="loader">
-              <div class="spinner-border text-success" role="status">
-                <span class="visually-hidden">Submitting the details, Please wait...</span>
-              </div>
-              <p>Submitting the details, Please wait...</p>
+        {_loading && (
+          <div className="loader">
+            <div class="spinner-border text-success" role="status">
+              <span class="visually-hidden">
+                Submitting the details, Please wait...
+              </span>
             </div>
-          )
-        }
+            <p>Submitting the details, Please wait...</p>
+          </div>
+        )}
 
         <div className="register__top w-100 d-flex justify-content-between">
           <div className="left">
@@ -300,7 +295,7 @@ const Register = () => {
                     {selectedGrade.length > 0
                       ? selectedGrade.length > 3
                         ? selectedGrade.slice(0, 3).join(", ") +
-                        `, +${selectedGrade.length - 3} more`
+                          `, +${selectedGrade.length - 3} more`
                         : selectedGrade.join(", ")
                       : "Select"}
                   </span>
@@ -350,7 +345,7 @@ const Register = () => {
                     {selectedSubject.length > 0
                       ? selectedSubject.length > 3
                         ? selectedSubject.slice(0, 3).join(", ") +
-                        `, +${selectedSubject.length - 3} more`
+                          `, +${selectedSubject.length - 3} more`
                         : selectedSubject.join(", ")
                       : "Select"}
                   </span>

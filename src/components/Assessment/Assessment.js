@@ -33,7 +33,13 @@ const Assessment = () => {
 
   return (
     <div>
-      <h2 className="mb-4">All Assessments</h2>
+      {assessmentId ? (
+        <h5 className="mb-4" style={{ color: "rgba(25, 25, 25, 0.8)" }}>
+          All Assessments &#62; Assessment 3
+        </h5>
+      ) : (
+        <h2 className="mb-4">All Assessments</h2>
+      )}
 
       {assessmentId ? (
         <>
