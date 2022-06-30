@@ -64,6 +64,18 @@ const Login = () => {
         </div>
 
         <div className="login__right p-5 d-flex flex-column justify-content-between">
+
+          {
+            _loading2 && (
+              <div className="loader">
+                <div class="spinner-border text-success" role="status">
+                  <span class="visually-hidden">Verifying OTP</span>
+                </div>
+                <p>Verifying OTP</p>
+              </div>
+            )
+          }
+
           <div className="top">
             {_data && _data.verifyPhone && _data.verifyPhone.id ? (
               <>

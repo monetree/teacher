@@ -21,11 +21,35 @@ const Register = () => {
   const [searchSchool, setSearchSchool] = useState([]);
 
   // dropdown
+  const gradesRef = React.useRef();
   const [selectedGrade, setSelectedGrade] = useState([]);
   const [gradeDropdown, setGradeDropdown] = useState(false);
 
+  const subjectsRef = React.useRef();
   const [selectedSubject, setSelectedSubject] = useState([]);
   const [subjectDropdown, setSubjectDropdown] = useState(false);
+
+
+  // close dropdown on click outside
+  useEffect(() => {
+    const handleClick = (event) => {
+      if (schoolRef.current && !schoolRef.current.contains(event.target)) {
+        setShowSchools(false);
+      }
+      if (gradesRef.current && !gradesRef.current.contains(event.target)) {
+        setGradeDropdown(false);
+      }
+      if (subjectsRef.current && !subjectsRef.current.contains(event.target)) {
+        setSubjectDropdown(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClick);
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+    }
+  }, [])
+
 
   const handleCloseSchool = (id) => {
     setSchool(id);
@@ -170,9 +194,23 @@ const Register = () => {
 
   console.log(schoolRef && schoolRef.current ? schoolRef.current.value : "");
 
+
+
   return (
     <section className="register__page min-vh-100 d-flex justify-content-center align-items-center">
       <div className="box mx-auto bg-white overflow-hidden d-flex flex-column">
+
+        {
+          _loading && (
+            <div className="loader">
+              <div class="spinner-border text-success" role="status">
+                <span class="visually-hidden">Submitting the details, Please wait...</span>
+              </div>
+              <p>Submitting the details, Please wait...</p>
+            </div>
+          )
+        }
+
         <div className="register__top w-100 d-flex justify-content-between">
           <div className="left">
             <h3 className="d-flex align-items-center gap-2">
@@ -245,7 +283,7 @@ const Register = () => {
             <div className="grades w-50 d-flex flex-column">
               <label htmlFor="grades">Grades</label>
 
-              <div className="grade-dropdown">
+              <div className="grade-dropdown" ref={gradesRef}>
                 <div
                   className="selected d-flex justify-content-between align-items-center"
                   onClick={() => setGradeDropdown(!gradeDropdown)}
@@ -262,7 +300,7 @@ const Register = () => {
                     {selectedGrade.length > 0
                       ? selectedGrade.length > 3
                         ? selectedGrade.slice(0, 3).join(", ") +
-                          `, +${selectedGrade.length - 3} more`
+                        `, +${selectedGrade.length - 3} more`
                         : selectedGrade.join(", ")
                       : "Select"}
                   </span>
@@ -295,7 +333,7 @@ const Register = () => {
             <div className="grades w-50 d-flex flex-column">
               <label htmlFor="grades">Subjects</label>
 
-              <div className="subject-dropdown">
+              <div className="subject-dropdown" ref={subjectsRef}>
                 <div
                   className="selected d-flex justify-content-between align-items-center"
                   onClick={() => setSubjectDropdown(!subjectDropdown)}
@@ -312,7 +350,7 @@ const Register = () => {
                     {selectedSubject.length > 0
                       ? selectedSubject.length > 3
                         ? selectedSubject.slice(0, 3).join(", ") +
-                          `, +${selectedSubject.length - 3} more`
+                        `, +${selectedSubject.length - 3} more`
                         : selectedSubject.join(", ")
                       : "Select"}
                   </span>
