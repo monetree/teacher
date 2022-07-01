@@ -5,17 +5,17 @@ const DatatablePage = ({ data_ }) => {
   const data = {
     columns: [
       {
-        label: "userRef",
-        field: "userRef",
+        label: "name",
+        field: "name",
         sort: "asc",
         width: 150,
       },
-      //   {
-      //     label: "completed",
-      //     field: "completed",
-      //     sort: "asc",
-      //     width: 270,
-      //   },
+      // {
+      //   label: "completed",
+      //   field: "completed",
+      //   sort: "asc",
+      //   width: 270,
+      // },
       {
         label: "createdAt",
         field: "createdAt",
@@ -47,7 +47,7 @@ const DatatablePage = ({ data_ }) => {
         width: 100,
       },
     ],
-    rows: [data_],
+    rows: data_,
   };
 
   return <MDBDataTable striped bordered small data={data} />;

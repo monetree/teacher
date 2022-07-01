@@ -171,6 +171,10 @@ const Register = () => {
   const [createTeacher, { loading: _loading, error: _error, data: _data }] =
     useMutation(MUTATIONS);
 
+  if (_data && _data.createTeacher && _data.createTeacher.id) {
+    window.location = "/register/confirm";
+  }
+
   /*
     on submission, call the function createTeacher({variables: {firstName, lastName}})
   */
@@ -190,8 +194,6 @@ const Register = () => {
       setSearchSchool([]);
     }
   };
-
-  console.log(schoolRef && schoolRef.current ? schoolRef.current.value : "");
 
   return (
     <section className="register__page min-vh-100 d-flex justify-content-center align-items-center">
