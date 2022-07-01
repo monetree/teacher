@@ -6,6 +6,18 @@
   border-radius: 8px;
 }
 
+.avatar-card {
+  background: #fff;
+  margin: 10px 0px;
+  padding: 20px;
+  box-shadow: 0px 1px 7px rgba(25, 25, 25, 0.08);
+  border-radius: 8px;
+  height: 170px;
+}
+.avatar-card > .row > div > img {
+  border-radius: 50%;
+}
+
 .dataTable {
   width: 100%;
   background: #fff;
@@ -68,4 +80,34 @@
 .status .complete {
   background: #e5fde9;
   color: #158a2a;
+}
+
+.pagination-number {
+  border: 1px solid rgba(25, 25, 25, 0.6);
+  border-radius: 4px;
+  margin: 10px;
+}
+
+.pagination-num > span {
+  background: #ffffff;
+  border: 1px solid #d8d8d8;
+  border-radius: 4px;
+  padding: 5px 10px;
+  margin: 2px;
+  cursor: pointer;
+}
+
+.next-page {
+  background: #0d4b6f !important;
+  color: #fff !important;
+}
+
+.prev-page {
+  background: #d8d8d8 !important;
+  color: #fff !important;
+}
+
+.active-page {
+  border: 1px solid #0d4b6f !important;
+  color: #0d4b6f;
 }

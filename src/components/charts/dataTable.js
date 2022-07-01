@@ -1,56 +1,47 @@
 import React from "react";
-import { MDBDataTable } from "mdbreact";
 
-const DatatablePage = ({ data_ }) => {
-  const data = {
-    columns: [
-      {
-        label: "name",
-        field: "name",
-        sort: "asc",
-        width: 150,
-      },
-      // {
-      //   label: "completed",
-      //   field: "completed",
-      //   sort: "asc",
-      //   width: 270,
-      // },
-      {
-        label: "createdAt",
-        field: "createdAt",
-        sort: "asc",
-        width: 200,
-      },
-      {
-        label: "updatedAt",
-        field: "updatedAt",
-        sort: "asc",
-        width: 100,
-      },
-      {
-        label: "failed",
-        field: "failed",
-        sort: "asc",
-        width: 150,
-      },
-      {
-        label: "passed",
-        field: "passed",
-        sort: "asc",
-        width: 100,
-      },
-      {
-        label: "skipped",
-        field: "skipped",
-        sort: "asc",
-        width: 100,
-      },
-    ],
-    rows: data_,
-  };
+const DatatablePage = ({ data, setAssessmentIdQuestion }) => {
+  return (
+    <table className="dataTable">
+      <colgroup>
+        <col style={{ width: "15%" }} />
+        <col style={{ width: "40%" }} />
+        <col style={{ width: "25%" }} />
+        <col style={{ width: "15%" }} />
+        <col style={{ width: "20%" }} />
+        <col style={{ width: "20%" }} />
+        <col style={{ width: "20%" }} />
+      </colgroup>
 
-  return <MDBDataTable striped bordered small data={data} />;
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Stundent Name</th>
+          <th scope="col">Score</th>
+          <th scope="col">Time</th>
+          <th scope="col">Failed</th>
+          <th scope="col">Passed</th>
+          <th scope="col">Skipped</th>
+        </tr>
+      </thead>
+      <tbody>
+        {data.map((item, index) => {
+          return (
+            <tr key={item.id} onClick={() => setAssessmentIdQuestion(item)}>
+              <td>{index + 1}</td>
+              <td>{item.name}</td>
+              <td>{item.score}</td>
+              <td>{item.time}</td>
+
+              <td>{item.failed}</td>
+              <td>{item.passed}</td>
+              <td>{item.skipped}</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  );
 };
 
 export default DatatablePage;

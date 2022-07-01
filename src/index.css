@@ -33,3 +33,24 @@ body {
   border-radius: 4px;
   font-weight: bold;
 }
+
+.btn-success {
+  background: #e5fde9 !important;
+  border-radius: 30px !important;
+  color: #158a2a !important;
+  border: none !important;
+}
+
+.btn-danger {
+  background: #ffebea;
+  border-radius: 30px;
+  color: #98150e;
+  border: none !important;
+}
+
+.btn-warning {
+  background: #fffbe3;
+  border-radius: 30px;
+  color: #836717;
+  border: none !important;
+}
