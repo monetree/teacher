@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Login.css";
 import logo from "../../assets/logo.png";
 import { useMutation, gql } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import OtpInput from "react-otp-input";
+import { Toaster } from "../../utils/toaster";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -43,8 +44,28 @@ const Login = () => {
     useMutation(LOGIN_MUTATIONS);
 
   if (_data2 && _data2.verifyPhone && _data2.verifyPhone.id) {
+    localStorage.setItem("teacher", _data2.verifyPhone.id);
     window.location = "/dashboard";
   }
+
+  useEffect(() => {
+    const teacher = localStorage.getItem("teacher");
+    if (teacher) {
+      window.location = "/dashboard";
+    }
+  }, []);
+
+  const handleSubmit = () => {
+    if (!phone) {
+      Toaster(1, "Phone required");
+      return;
+    }
+    verifyPhone({
+      variables: {
+        phone,
+      },
+    });
+  };
 
   return (
     <section className="login__page min-vh-100 d-flex justify-content-center align-items-center">
@@ -64,17 +85,14 @@ const Login = () => {
         </div>
 
         <div className="login__right p-5 d-flex flex-column justify-content-between">
-
-          {
-            _loading2 && (
-              <div className="loader">
-                <div class="spinner-border text-success" role="status">
-                  <span class="visually-hidden">Verifying OTP</span>
-                </div>
-                <p>Verifying OTP</p>
+          {_loading2 && (
+            <div className="loader">
+              <div class="spinner-border text-success" role="status">
+                <span class="visually-hidden">Verifying OTP</span>
               </div>
-            )
-          }
+              <p>Verifying OTP</p>
+            </div>
+          )}
 
           <div className="top">
             {_data && _data.verifyPhone && _data.verifyPhone.id ? (
@@ -117,16 +135,7 @@ const Login = () => {
                   />
                 </div>
 
-                <button
-                  className="btn-otp"
-                  onClick={() =>
-                    verifyPhone({
-                      variables: {
-                        phone,
-                      },
-                    })
-                  }
-                >
+                <button className="btn-otp" onClick={handleSubmit}>
                   Get OTP
                 </button>
               </>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Register.css";
-
+import { Toaster } from "../../utils/toaster";
 import { useQuery, useMutation, gql } from "@apollo/client";
 
 const Register = () => {
@@ -193,6 +193,56 @@ const Register = () => {
     } else {
       setSearchSchool([]);
     }
+  };
+
+  useEffect(() => {
+    const teacher = localStorage.getItem("teacher");
+    if (teacher) {
+      window.location = "/dashboard";
+    }
+  }, []);
+
+  const handleSubmit = () => {
+    if (!firstName) {
+      Toaster(1, "FirstName required");
+      return;
+    }
+    if (!lastName) {
+      Toaster(1, "LastName required");
+      return;
+    }
+    if (!phone) {
+      Toaster(1, "Phone required");
+      return;
+    }
+    if (!email) {
+      Toaster(1, "Email required");
+      return;
+    }
+    if (!grade) {
+      Toaster(1, "Grade required");
+      return;
+    }
+    if (!subject) {
+      Toaster(1, "Subject required");
+      return;
+    }
+    if (!school) {
+      Toaster(1, "School required");
+      return;
+    }
+
+    createTeacher({
+      variables: {
+        firstName,
+        lastName,
+        phone,
+        email,
+        grade,
+        subject,
+        school,
+      },
+    });
   };
 
   return (
@@ -401,22 +451,7 @@ const Register = () => {
           <p className="m-0">
             By submitting the form, you agree to Quest Terms and Conditions.
           </p>
-          <button
-            className="btn-otp"
-            onClick={() =>
-              createTeacher({
-                variables: {
-                  firstName,
-                  lastName,
-                  phone,
-                  email,
-                  grade,
-                  subject,
-                  school,
-                },
-              })
-            }
-          >
+          <button className="btn-otp" onClick={handleSubmit}>
             Continue & Review
           </button>
         </div>

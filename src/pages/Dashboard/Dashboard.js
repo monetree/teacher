@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import logo from "../../assets/logo.png";
 import "./Dashboard.css";
 import { Navigate, NavLink, Route, Routes } from "react-router-dom";
@@ -23,6 +23,18 @@ const Dashboard = () => {
     } else {
       setSearched([]);
     }
+  };
+
+  useEffect(() => {
+    const teacher = localStorage.getItem("teacher");
+    if (!teacher) {
+      window.location = "/";
+    }
+  }, []);
+
+  const logout = () => {
+    localStorage.removeItem("teacher");
+    window.location = "/";
   };
 
   return (
@@ -101,7 +113,7 @@ const Dashboard = () => {
                 Profile
               </NavLink>
             </li>
-            <li>
+            <li onClick={logout}>
               <button>Logout</button>
             </li>
           </ul>
