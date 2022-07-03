@@ -57,3 +57,115 @@ export const schools = [
     address: "1213 Main St",
   }
 ];
+
+
+// create question
+
+export const curriculums = [
+  {
+    id: 1,
+    name: "Curriculum 1",
+  },
+  {
+    id: 2,
+    name: "Curriculum 2",
+  },
+  {
+    id: 3,
+    name: "Curriculum 3",
+  }
+]
+
+
+export const grades = [
+  {
+    id: 1,
+    name: "Grade 1",
+  },
+  {
+    id: 2,
+    name: "Grade 2",
+  },
+  {
+    id: 3,
+    name: "Grade 3",
+  }
+]
+
+export const subjects = [
+  {
+    id: 1,
+    name: "Math",
+  },
+  {
+    id: 2,
+    name: "Physics",
+  },
+  {
+    id: 3,
+    name: "Biology",
+  }
+]
+
+export const streams = [
+  {
+    id: 1,
+    name: "Stream 1",
+  },
+  {
+    id: 2,
+    name: "Stream 2",
+  },
+  {
+    id: 3,
+    name: "Stream 3",
+  }
+]
+
+
+export const chapters = [
+  {
+    id: 1,
+    name: "Chapter 1",
+  },
+  {
+    id: 2,
+    name: "Chapter 2",
+  },
+  {
+    id: 3,
+    name: "Chapter 3",
+  }
+]
+
+
+export const difficulties = [
+  {
+    id: 1,
+    name: "Easy",
+  },
+  {
+    id: 2,
+    name: "Medium",
+  },
+  {
+    id: 3,
+    name: "Hard",
+  }
+]
+
+
+export const times = [
+  {
+    id: 1,
+    name: "20 mins",
+  },
+  {
+    id: 2,
+    name: "40 mins",
+  },
+  {
+    id: 3,
+    name: "60 mins",
+  }
+]

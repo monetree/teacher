@@ -1,11 +1,17 @@
 import React, { useEffect } from "react";
 import logo from "../../assets/logo.png";
+import questionIcon from '../../assets/question.png';
+import assessmentIcon from '../../assets/assessment.png';
 import "./Dashboard.css";
-import { Navigate, NavLink, Route, Routes } from "react-router-dom";
+import { Navigate, NavLink, Route, Routes, useNavigate } from "react-router-dom";
 import Assessment from "../../components/Assessment/Assessment";
 import { assessments } from "../../data";
+import CreateQuestion from "./CreateQuestion/CreateQuestion";
 
 const Dashboard = () => {
+
+  const navigate = useNavigate();
+
   const searchRef = React.useRef();
   const [searched, setSearched] = React.useState([]);
 
@@ -36,6 +42,19 @@ const Dashboard = () => {
     localStorage.removeItem("teacher");
     window.location = "/";
   };
+
+
+  // close modal or open modal
+
+  const [modal, setModal] = React.useState(false);
+  const toggleModal = () => setModal(!modal);
+
+  // navigate to create question or assessment page
+
+  const handleCreateNavigate = (path) => {
+    navigate(path);
+    toggleModal();
+  }
 
   return (
     <section className="dashboard__page">
@@ -83,9 +102,9 @@ const Dashboard = () => {
           )}
         </div>
 
-        <button className="d-flex align-items-center py-2 px-4 text-white">
+        <button onClick={toggleModal} className="d-flex align-items-center py-2 px-5 text-white">
           <ion-icon name="add-outline"></ion-icon>
-          <span>Create Assessment</span>
+          <span>Create</span>
         </button>
 
         <div className="user d-flex align-items-center gap-5">
@@ -124,7 +143,32 @@ const Dashboard = () => {
             <Route index element={<Navigate to={"assessments"} />} />
             <Route path="assessments" element={<Assessment />} />
             <Route path="profile" element={<h1>Profile Page</h1>} />
+            <Route path="create/question" element={<CreateQuestion />} />
           </Routes>
+        </div>
+        <div className={modal ? "create__modal show" : "create__modal"}>
+          <div className="create__modal__content">
+            <button onClick={toggleModal} className="modal-close">
+              <ion-icon name="close-outline"></ion-icon>
+            </button>
+
+            <h3 className="m-0 mb-2">Create Question or Assessment</h3>
+            <p>Please choose the option</p>
+
+            <div className="create__modal__options">
+              <button onClick={() => handleCreateNavigate('create/question')}>
+                <img src={questionIcon} alt="" />
+                <h5>Question</h5>
+                <p>Create multiple choice question</p>
+              </button>
+
+              <button onClick={() => handleCreateNavigate('create/assessment')}>
+                <img src={assessmentIcon} alt="" />
+                <h5>Assessment</h5>
+                <p>Create a question collection </p>
+              </button>
+            </div>
+          </div>
         </div>
       </main>
     </section>
