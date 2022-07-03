@@ -202,7 +202,23 @@ const Register = () => {
     }
   }, []);
 
+  const [valid, setValid] = useState(false);
+
   const handleSubmit = () => {
+    createTeacher({
+      variables: {
+        firstName,
+        lastName,
+        phone,
+        email,
+        grade,
+        subject,
+        school,
+      },
+    });
+  };
+
+  const handleReview = () => {
     if (!firstName) {
       Toaster(1, "FirstName required");
       return;
@@ -232,17 +248,7 @@ const Register = () => {
       return;
     }
 
-    createTeacher({
-      variables: {
-        firstName,
-        lastName,
-        phone,
-        email,
-        grade,
-        subject,
-        school,
-      },
-    });
+    setValid(true);
   };
 
   return (
@@ -300,138 +306,166 @@ const Register = () => {
 
           <div className="input-group2 mb-4">
             <label htmlFor="school">School</label>
-            <div ref={schoolsRef} className="d-flex align-items-center">
-              <ion-icon name="search-outline"></ion-icon>
-              <input
-                ref={schoolRef}
-                onChange={handleSchoolSearch}
-                list="schools"
-                type="text"
-                id="schools"
-              />
 
-              {showSchools && searchSchool.length > 0 && (
-                <div className="school-list">
-                  <ul>
-                    {data.getSchools.map((item) => (
-                      <li
-                        key={item.id}
-                        onClick={() => {
-                          handleCloseSchool(item.id);
-                          schoolRef.current.value = item.school_name;
-                        }}
-                      >
-                        {item.school_name}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
+            {valid ? (
+              <div className="display">
+                <h5>
+                  {schoolRef && schoolRef.current
+                    ? schoolRef.current.value
+                    : ""}
+                </h5>
+              </div>
+            ) : (
+              <div ref={schoolsRef} className="d-flex align-items-center">
+                <ion-icon name="search-outline"></ion-icon>
+                <input
+                  ref={schoolRef}
+                  onChange={handleSchoolSearch}
+                  list="schools"
+                  type="text"
+                  id="schools"
+                />
+
+                {showSchools && searchSchool.length > 0 && (
+                  <div className="school-list">
+                    <ul>
+                      {data.getSchools.map((item) => (
+                        <li
+                          key={item.id}
+                          onClick={() => {
+                            handleCloseSchool(item.id);
+                            schoolRef.current.value = item.school_name;
+                          }}
+                        >
+                          {item.school_name}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           <div className="input-group3 d-flex align-items-center gap-5">
             <div className="grades w-50 d-flex flex-column">
               <label htmlFor="grades">Grades</label>
-
-              <div className="grade-dropdown" ref={gradesRef}>
-                <div
-                  className="selected d-flex justify-content-between align-items-center"
-                  onClick={() => setGradeDropdown(!gradeDropdown)}
-                >
-                  <span
-                    title={
-                      selectedGrade.length > 0
-                        ? selectedGrade.length > 3
-                          ? selectedGrade.join(", ")
+              {valid ? (
+                <div className="display">
+                  {selectedGrade.map((grade, index) => (
+                    <h5 key={index}>{grade}</h5>
+                  ))}
+                </div>
+              ) : (
+                <div className="grade-dropdown" ref={gradesRef}>
+                  <div
+                    className="selected d-flex justify-content-between align-items-center"
+                    onClick={() => setGradeDropdown(!gradeDropdown)}
+                  >
+                    <span
+                      title={
+                        selectedGrade.length > 0
+                          ? selectedGrade.length > 3
+                            ? selectedGrade.join(", ")
+                            : ""
                           : ""
-                        : ""
+                      }
+                    >
+                      {selectedGrade.length > 0
+                        ? selectedGrade.length > 3
+                          ? selectedGrade.slice(0, 3).join(", ") +
+                            `, +${selectedGrade.length - 3} more`
+                          : selectedGrade.join(", ")
+                        : "Select"}
+                    </span>
+                    <ion-icon name="chevron-down-outline"></ion-icon>
+                  </div>
+                  <ul
+                    className={
+                      gradeDropdown ? "grade-items show" : "grade-items"
                     }
                   >
-                    {selectedGrade.length > 0
-                      ? selectedGrade.length > 3
-                        ? selectedGrade.slice(0, 3).join(", ") +
-                          `, +${selectedGrade.length - 3} more`
-                        : selectedGrade.join(", ")
-                      : "Select"}
-                  </span>
-                  <ion-icon name="chevron-down-outline"></ion-icon>
+                    {data && data.getGrades ? (
+                      data.getGrades.map((grade, index) => (
+                        <li key={index} className="grade-item">
+                          <input
+                            type="checkbox"
+                            id={`gradeID${grade.id}`}
+                            value={grade.grade_info}
+                            onChange={handleGradeCheck}
+                          />
+                          <label htmlFor={`gradeID${grade.id}`}>
+                            {grade.grade_info}
+                          </label>
+                        </li>
+                      ))
+                    ) : (
+                      <li>Select</li>
+                    )}
+                  </ul>
                 </div>
-                <ul
-                  className={gradeDropdown ? "grade-items show" : "grade-items"}
-                >
-                  {data && data.getGrades ? (
-                    data.getGrades.map((grade, index) => (
-                      <li key={index} className="grade-item">
-                        <input
-                          type="checkbox"
-                          id={`gradeID${grade.id}`}
-                          value={grade.grade_info}
-                          onChange={handleGradeCheck}
-                        />
-                        <label htmlFor={`gradeID${grade.id}`}>
-                          {grade.grade_info}
-                        </label>
-                      </li>
-                    ))
-                  ) : (
-                    <li>Select</li>
-                  )}
-                </ul>
-              </div>
+              )}
             </div>
 
             <div className="grades w-50 d-flex flex-column">
               <label htmlFor="grades">Subjects</label>
 
-              <div className="subject-dropdown" ref={subjectsRef}>
-                <div
-                  className="selected d-flex justify-content-between align-items-center"
-                  onClick={() => setSubjectDropdown(!subjectDropdown)}
-                >
-                  <span
-                    title={
-                      selectedSubject.length > 0
-                        ? selectedSubject.length > 3
-                          ? selectedSubject.join(", ")
+              {valid ? (
+                <div className="display">
+                  {selectedSubject.map((subject, index) => (
+                    <h5 key={index}>{subject}</h5>
+                  ))}
+                </div>
+              ) : (
+                <div className="subject-dropdown" ref={subjectsRef}>
+                  <div
+                    className="selected d-flex justify-content-between align-items-center"
+                    onClick={() => setSubjectDropdown(!subjectDropdown)}
+                  >
+                    <span
+                      title={
+                        selectedSubject.length > 0
+                          ? selectedSubject.length > 3
+                            ? selectedSubject.join(", ")
+                            : ""
                           : ""
-                        : ""
+                      }
+                    >
+                      {selectedSubject.length > 0
+                        ? selectedSubject.length > 3
+                          ? selectedSubject.slice(0, 3).join(", ") +
+                            `, +${selectedSubject.length - 3} more`
+                          : selectedSubject.join(", ")
+                        : "Select"}
+                    </span>
+                    <ion-icon name="chevron-down-outline"></ion-icon>
+                  </div>
+
+                  <ul
+                    className={
+                      subjectDropdown ? "subject-items show" : "subject-items"
                     }
                   >
-                    {selectedSubject.length > 0
-                      ? selectedSubject.length > 3
-                        ? selectedSubject.slice(0, 3).join(", ") +
-                          `, +${selectedSubject.length - 3} more`
-                        : selectedSubject.join(", ")
-                      : "Select"}
-                  </span>
-                  <ion-icon name="chevron-down-outline"></ion-icon>
+                    {data && data.getSubjects ? (
+                      data.getSubjects.map((subject, index) => (
+                        <li key={index} className="subject-item">
+                          <input
+                            type="checkbox"
+                            id={`subjectID${subject.id}`}
+                            value={subject.subject_info}
+                            onChange={handleSubjectCheck}
+                          />
+                          <label htmlFor={`subjectID${subject.id}`}>
+                            {subject.subject_info}
+                          </label>
+                        </li>
+                      ))
+                    ) : (
+                      <li>Select</li>
+                    )}
+                  </ul>
                 </div>
-
-                <ul
-                  className={
-                    subjectDropdown ? "subject-items show" : "subject-items"
-                  }
-                >
-                  {data && data.getSubjects ? (
-                    data.getSubjects.map((subject, index) => (
-                      <li key={index} className="subject-item">
-                        <input
-                          type="checkbox"
-                          id={`subjectID${subject.id}`}
-                          value={subject.subject_info}
-                          onChange={handleSubjectCheck}
-                        />
-                        <label htmlFor={`subjectID${subject.id}`}>
-                          {subject.subject_info}
-                        </label>
-                      </li>
-                    ))
-                  ) : (
-                    <li>Select</li>
-                  )}
-                </ul>
-              </div>
+              )}
             </div>
           </div>
 
@@ -451,9 +485,15 @@ const Register = () => {
           <p className="m-0">
             By submitting the form, you agree to Quest Terms and Conditions.
           </p>
-          <button className="btn-otp" onClick={handleSubmit}>
-            Continue & Review
-          </button>
+          {valid ? (
+            <button className="btn-otp" onClick={handleSubmit}>
+              Submit
+            </button>
+          ) : (
+            <button className="btn-otp" onClick={handleReview}>
+              Continue & Review
+            </button>
+          )}
         </div>
       </div>
     </section>
