@@ -29,7 +29,6 @@ export const assessments = [
   },
 ];
 
-
 export const schools = [
   {
     id: 1,
@@ -55,9 +54,8 @@ export const schools = [
     id: 5,
     name: "School 5",
     address: "1213 Main St",
-  }
+  },
 ];
-
 
 // create question
 
@@ -73,9 +71,8 @@ export const curriculums = [
   {
     id: 3,
     name: "Curriculum 3",
-  }
-]
-
+  },
+];
 
 export const grades = [
   {
@@ -89,8 +86,8 @@ export const grades = [
   {
     id: 3,
     name: "Grade 3",
-  }
-]
+  },
+];
 
 export const subjects = [
   {
@@ -104,8 +101,8 @@ export const subjects = [
   {
     id: 3,
     name: "Biology",
-  }
-]
+  },
+];
 
 export const streams = [
   {
@@ -119,9 +116,8 @@ export const streams = [
   {
     id: 3,
     name: "Stream 3",
-  }
-]
-
+  },
+];
 
 export const chapters = [
   {
@@ -135,9 +131,8 @@ export const chapters = [
   {
     id: 3,
     name: "Chapter 3",
-  }
-]
-
+  },
+];
 
 export const difficulties = [
   {
@@ -151,9 +146,8 @@ export const difficulties = [
   {
     id: 3,
     name: "Hard",
-  }
-]
-
+  },
+];
 
 export const times = [
   {
@@ -167,5 +161,5 @@ export const times = [
   {
     id: 3,
     name: "60 mins",
-  }
-]
+  },
+];
