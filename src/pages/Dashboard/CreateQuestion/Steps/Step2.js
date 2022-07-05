@@ -1,19 +1,16 @@
 import React from "react";
-import { difficulties } from "../../../../data";
 import { times } from "../../../../data";
-import { useDispatch, useSelector } from "react-redux";
-import { createQuestion2 } from "../../../../store/slices/questionSlice";
+import QuestionContext from "../../../../context/QuestionContext";
 
 const Step2 = ({ data }) => {
-  // redux dispatch & selector
-  const dispatch = useDispatch();
-  const allData = useSelector((state) => state.question.step2);
+
+  const { questionData, setQuestionData } = React.useContext(QuestionContext);
 
   // data states
   const [difficulty, setDifficulty] = React.useState(
-    allData ? allData.difficulty : ""
+    questionData.step2 ? questionData.step2.difficulty : ""
   );
-  const [time, setTime] = React.useState(allData ? allData.time : "");
+  const [time, setTime] = React.useState(questionData.step2 ? questionData.step2.time : "");
 
   // dropdown states
   const [difficultyDropdown, setDifficultyDropdown] = React.useState(false);
@@ -48,12 +45,13 @@ const Step2 = ({ data }) => {
 
   React.useEffect(() => {
     if (difficulty && time) {
-      dispatch(
-        createQuestion2({
+      setQuestionData({
+        ...questionData,
+        step2: {
           difficulty,
           time,
-        })
-      );
+        },
+      });
     }
   }, [difficulty, time]);
 
@@ -110,7 +108,7 @@ const Step2 = ({ data }) => {
               onClick={() => setTimeDropdown(!timeDropdown)}
             >
               <span>
-                {allData ? allData.time : time ? time : "Select Time"}
+                {questionData.step2 ? questionData.step2.time : time ? time : "Select Time"}
               </span>
               <ion-icon name="chevron-down-outline"></ion-icon>
             </div>

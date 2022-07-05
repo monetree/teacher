@@ -7,6 +7,7 @@ import { Navigate, NavLink, Route, Routes, useNavigate } from "react-router-dom"
 import Assessment from "../../components/Assessment/Assessment";
 import { assessments } from "../../data";
 import CreateQuestion from "./CreateQuestion/CreateQuestion";
+import { QuestionProvider } from "../../context/QuestionContext";
 
 const Dashboard = () => {
 
@@ -143,7 +144,10 @@ const Dashboard = () => {
             <Route index element={<Navigate to={"assessments"} />} />
             <Route path="assessments" element={<Assessment />} />
             <Route path="profile" element={<h1>Profile Page</h1>} />
-            <Route path="create/question" element={<CreateQuestion />} />
+            <Route
+              path="create/question"
+              element={<QuestionProvider><CreateQuestion /></QuestionProvider>}
+            />
           </Routes>
         </div>
         <div className={modal ? "create__modal show" : "create__modal"}>

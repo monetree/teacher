@@ -1,6 +1,4 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { clearQuestion } from "../../../store/slices/questionSlice";
 import { useQuery, useMutation, gql } from "@apollo/client";
 
 import "./CreateQuestion.css";
@@ -9,6 +7,7 @@ import Step2 from "./Steps/Step2";
 import Step3 from "./Steps/Step3";
 import Step4 from "./Steps/Step4";
 import Step5 from "./Steps/Step5";
+import QuestionContext from "../../../context/QuestionContext";
 
 const steps = [
   {
@@ -29,27 +28,24 @@ const steps = [
 ];
 
 const CreateQuestion = () => {
-  const dispatch = useDispatch();
 
-  const step1Data = useSelector((state) => state.question.step1);
-  const step2Data = useSelector((state) => state.question.step2);
-  const step3Data = useSelector((state) => state.question.step3);
+  const { questionData, setQuestionData } = React.useContext(QuestionContext);
 
   const [currentStep, setCurrentStep] = React.useState(0);
 
   const stepValidator = () => {
     if (currentStep === 0) {
-      if (step1Data) {
+      if (questionData.step1) {
         setCurrentStep(currentStep + 1);
       }
     }
     if (currentStep === 1) {
-      if (step2Data) {
+      if (questionData.step2) {
         setCurrentStep(currentStep + 1);
       }
     }
     if (currentStep === 2) {
-      if (step3Data) {
+      if (questionData.step3) {
         setCurrentStep(currentStep + 1);
       }
     }
@@ -134,9 +130,9 @@ const CreateQuestion = () => {
 
   const handleSubmit = () => {
     const data = {
-      ...step1Data,
-      ...step2Data,
-      ...step3Data,
+      ...questionData.step1,
+      ...questionData.step2,
+      ...questionData.step3,
     };
     console.log(data);
 
@@ -174,7 +170,12 @@ const CreateQuestion = () => {
       },
     });
 
-    dispatch(clearQuestion());
+    // dispatch(clearQuestion());
+    setQuestionData({
+      step1: null,
+      step2: null,
+      step3: null,
+    });
     setCurrentStep(currentStep + 1);
   };
 
@@ -188,8 +189,8 @@ const CreateQuestion = () => {
                 currentStep === index
                   ? "create__step current"
                   : currentStep > index
-                  ? "create__step done"
-                  : "create__step"
+                    ? "create__step done"
+                    : "create__step"
               }
               key={index}
             >
@@ -253,16 +254,16 @@ const CreateQuestion = () => {
               }
             }}
             disabled={
-              (currentStep === 0 && !step1Data) ||
-              (currentStep === 1 && !step2Data) ||
-              (currentStep === 2 && !step3Data)
+              (currentStep === 0 && !questionData.step1) ||
+              (currentStep === 1 && !questionData.step2) ||
+              (currentStep === 2 && !questionData.step3)
             }
           >
             {currentStep === steps.length - 3
               ? "Next: Preview"
               : currentStep === steps.length - 2
-              ? "Submit"
-              : `Next: ${steps[currentStep + 1]?.title}`}
+                ? "Submit"
+                : `Next: ${steps[currentStep + 1]?.title}`}
           </button>
         )}
       </div>

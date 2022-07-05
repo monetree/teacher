@@ -1,29 +1,28 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { createQuestion3 } from "../../../../store/slices/questionSlice";
+import QuestionContext from "../../../../context/QuestionContext";
 
 const Step3 = () => {
-  // redux
-  const dispatch = useDispatch();
-  const allData = useSelector((state) => state.question.step3);
+
+  const { questionData, setQuestionData } = React.useContext(QuestionContext);
+
 
   // data states
   const [question, setQuestion] = React.useState(
-    allData ? allData.question : ""
+    questionData.step3 ? questionData.step3.question : ""
   );
   const [option1, setOption1] = React.useState(
-    allData ? allData.options[0] : ""
+    questionData.step3 ? questionData.step3.options[0] : ""
   );
   const [option2, setOption2] = React.useState(
-    allData ? allData.options[1] : ""
+    questionData.step3 ? questionData.step3.options[1] : ""
   );
   const [option3, setOption3] = React.useState(
-    allData ? allData.options[2] : ""
+    questionData.step3 ? questionData.step3.options[2] : ""
   );
   const [option4, setOption4] = React.useState(
-    allData ? allData.options[3] : ""
+    questionData.step3 ? questionData.step3.options[3] : ""
   );
-  const [answer, setAnswer] = React.useState(allData ? allData.answer : 0);
+  const [answer, setAnswer] = React.useState(questionData.step3 ? questionData.step3.answer : 0);
 
   // data refs
   const questionRef = React.useRef();
@@ -35,13 +34,14 @@ const Step3 = () => {
   // set data on state change
   React.useEffect(() => {
     if (question && option1 && option2 && option3 && option4 && answer) {
-      dispatch(
-        createQuestion3({
+      setQuestionData({
+        ...questionData,
+        step3: {
           question,
           options: [option1, option2, option3, option4],
           answer,
-        })
-      );
+        },
+      });
     }
   }, [question, option1, option2, option3, option4, answer]);
 
@@ -62,7 +62,7 @@ const Step3 = () => {
           name="fullQuestion"
           rows="10"
           cols="50"
-          defaultValue={allData ? allData.question : ""}
+          defaultValue={questionData.step3 ? questionData.step3.question : ""}
         ></textarea>
       </div>
 
@@ -75,17 +75,17 @@ const Step3 = () => {
             onChange={() => setOption1(option1Ref.current.value)}
             id="option1"
             name="option1"
-            defaultValue={allData ? allData.options[0] : ""}
+            defaultValue={questionData.step3 ? questionData.step3.options[0] : ""}
           ></textarea>
 
           <label className="markAs">
             <p
               className={
-                allData && allData.answer === 1
+                questionData.step3 && questionData.step3.answer === 1
                   ? "active"
                   : answer === 1
-                  ? "active"
-                  : ""
+                    ? "active"
+                    : ""
               }
             >
               <ion-icon name="checkmark-outline"></ion-icon>
@@ -95,7 +95,7 @@ const Step3 = () => {
               name="correct"
               value="option1"
               onChange={() => selectAnswer(answer === 1 ? 0 : 1)}
-              defaultChecked={allData ? allData.answer === 1 : false}
+              defaultChecked={questionData.step3 ? questionData.step3.answer === 1 : false}
             />
             <span>Mark as correct answer</span>
           </label>
@@ -109,17 +109,17 @@ const Step3 = () => {
             onChange={() => setOption2(option2Ref.current.value)}
             id="option2"
             name="option2"
-            defaultValue={allData ? allData.options[1] : ""}
+            defaultValue={questionData.step3 ? questionData.step3.options[1] : ""}
           ></textarea>
 
           <label className="markAs">
             <p
               className={
-                allData && allData.answer === 2
+                questionData.step3 && questionData.step3.answer === 2
                   ? "active"
                   : answer === 2
-                  ? "active"
-                  : ""
+                    ? "active"
+                    : ""
               }
             >
               <ion-icon name="checkmark-outline"></ion-icon>
@@ -129,7 +129,7 @@ const Step3 = () => {
               name="correct"
               value="option2"
               onChange={() => selectAnswer(answer === 2 ? 0 : 2)}
-              defaultChecked={allData ? allData.answer === 2 : false}
+              defaultChecked={questionData.step3 ? questionData.step3.answer === 2 : false}
             />
             <span>Mark as correct answer</span>
           </label>
@@ -145,17 +145,17 @@ const Step3 = () => {
             onChange={() => setOption3(option3Ref.current.value)}
             id="option3"
             name="option3"
-            defaultValue={allData ? allData.options[2] : ""}
+            defaultValue={questionData.step3 ? questionData.step3.options[2] : ""}
           ></textarea>
 
           <label className="markAs">
             <p
               className={
-                allData && allData.answer === 3
+                questionData.step3 && questionData.step3.answer === 3
                   ? "active"
                   : answer === 3
-                  ? "active"
-                  : ""
+                    ? "active"
+                    : ""
               }
             >
               <ion-icon name="checkmark-outline"></ion-icon>
@@ -165,7 +165,7 @@ const Step3 = () => {
               name="correct"
               value="option3"
               onChange={() => selectAnswer(answer === 3 ? 0 : 3)}
-              defaultChecked={allData ? allData.answer === 3 : false}
+              defaultChecked={questionData.step3 ? questionData.step3.answer === 3 : false}
             />
             <span>Mark as correct answer</span>
           </label>
@@ -179,17 +179,17 @@ const Step3 = () => {
             onChange={() => setOption4(option4Ref.current.value)}
             id="option4"
             name="option4"
-            defaultValue={allData ? allData.options[3] : ""}
+            defaultValue={questionData.step3 ? questionData.step3.options[3] : ""}
           ></textarea>
 
           <label className="markAs">
             <p
               className={
-                allData && allData.answer === 4
+                questionData.step3 && questionData.step3.answer === 4
                   ? "active"
                   : answer === 4
-                  ? "active"
-                  : ""
+                    ? "active"
+                    : ""
               }
             >
               <ion-icon name="checkmark-outline"></ion-icon>
@@ -199,7 +199,7 @@ const Step3 = () => {
               name="correct"
               value="option4"
               onChange={() => selectAnswer(answer === 4 ? 0 : 4)}
-              defaultChecked={allData ? allData.answer === 4 : false}
+              defaultChecked={questionData.step3 ? questionData.step3.answer === 4 : false}
             />
             <span>Mark as correct answer</span>
           </label>

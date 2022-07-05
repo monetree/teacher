@@ -1,20 +1,18 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { createQuestion1 } from "../../../../store/slices/questionSlice";
+import React, { useContext } from "react";
+import QuestionContext from "../../../../context/QuestionContext";
 
 const Step1 = ({ data }) => {
-  // redux dispatch & selector
-  const dispatch = useDispatch();
-  const allData = useSelector((state) => state.question.step1);
+
+  // react context api
+  const { questionData, setQuestionData } = useContext(QuestionContext);
 
   // data states
-  const [curriculum, setCurriculum] = React.useState(
-    allData ? allData.curriculum : ""
-  );
-  const [grade, setGrade] = React.useState(allData ? allData.grade : "");
-  const [subject, setSubject] = React.useState(allData ? allData.subject : "");
-  const [stream, setStream] = React.useState(allData ? allData.stream : "");
-  const [chapter, setChapter] = React.useState(allData ? allData.chapter : "");
+  const [curriculum, setCurriculum] = React.useState(questionData.step1 ? questionData.step1.curriculum : "");
+  const [grade, setGrade] = React.useState(questionData.step1 ? questionData.step1.grade : "");
+  const [subject, setSubject] = React.useState(questionData.step1 ? questionData.step1.subject : "");
+  const [stream, setStream] = React.useState(questionData.step1 ? questionData.step1.stream : "");
+  const [chapter, setChapter] = React.useState(questionData.step1 ? questionData.step1.chapter : "");
+
 
   // dropdown change handlers
   const [curriculumDropdown, setCurriculumDropdown] = React.useState(false);
@@ -64,15 +62,16 @@ const Step1 = ({ data }) => {
 
   React.useEffect(() => {
     if (curriculum && grade && subject && stream && chapter) {
-      dispatch(
-        createQuestion1({
+      setQuestionData({
+        ...questionData,
+        step1: {
           curriculum,
           grade,
           subject,
           stream,
           chapter,
-        })
-      );
+        }
+      });
     }
   }, [curriculum, grade, subject, stream, chapter]);
 
