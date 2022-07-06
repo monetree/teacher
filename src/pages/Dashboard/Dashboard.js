@@ -8,6 +8,8 @@ import Assessment from "../../components/Assessment/Assessment";
 import { assessments } from "../../data";
 import CreateQuestion from "./CreateQuestion/CreateQuestion";
 import { QuestionProvider } from "../../context/QuestionContext";
+import CreateAssessment from "./CreateAssessment/CreateAssessment";
+import { AssessmentProvider } from "../../context/AssessmentContext";
 
 const Dashboard = () => {
 
@@ -147,6 +149,10 @@ const Dashboard = () => {
             <Route
               path="create/question"
               element={<QuestionProvider><CreateQuestion /></QuestionProvider>}
+            />
+            <Route
+              path="create/assessment"
+              element={<AssessmentProvider><CreateAssessment /></AssessmentProvider>}
             />
           </Routes>
         </div>

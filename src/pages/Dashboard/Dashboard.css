@@ -1,6 +1,9 @@
 .dashboard__page .topbar {
 	background: #0b3d5a;
 	height: 78px;
+	position: fixed;
+	width: 100%;
+	z-index: 100000000000;
 }
 
 .dashboard__page .topbar .logo img {
@@ -132,6 +135,7 @@
 	padding-left: 30px;
 	padding-top: 20px;
 	border-right: 2px solid rgba(48, 48, 48, 0.192);
+	margin-top: 78px;
 }
 
 .sidebar ul {
@@ -172,6 +176,7 @@
 
 .content {
 	background: #eff3f5;
+	margin-top: 78px;
 }
 
 .create__modal {

@@ -1,36 +1,3 @@
-/* ._1Lo2h {
-	width: 100%;
-	max-width: 800px;
-}
-
-._2Jtxm._35Ago ._2kL0S {
-	color: #0d4b6f !important;
-	background: #fff !important;
-	border: 2px solid #0d4b6f;
-}
-
-._2Jtxm ._2kL0S {
-	color: rgba(25, 25, 25, 0.25) !important;
-	background: #fff !important;
-	border: 2px solid rgba(25, 25, 25, 0.25);
-}
-
-._2Jtxm._2ZUAI ._2JvrO {
-	color: #fff !important;
-	background: #0d4b6f !important;
-	border: 2px solid #0d4b6f;
-}
-
-._2Jtxm::before {
-	background: linear-gradient(
-		to left,
-		rgba(25, 25, 25, 0.1) 50%,
-		#0d4b6f 50%
-	);
-	background-size: 200% 100%;
-	background-position: right bottom;
-} */
-
 .create__steps {
 	width: 100%;
 	max-width: 750px;
@@ -38,6 +5,10 @@
 	justify-content: space-between;
 	align-items: center;
 	margin-bottom: 20px;
+}
+
+.createAssessment .create__steps {
+	max-width: 650px;
 }
 
 .create__step {
@@ -69,7 +40,7 @@
 	--ionicon-stroke-width: 50px;
 }
 
-.step-indicator::before {
+.createQuestion .step-indicator::before {
 	content: "";
 	position: absolute;
 	width: 160px;
@@ -80,6 +51,23 @@
 	transform: translateY(-50%);
 	transition: all 0.3s ease-in-out;
 	/* z-index: -1; */
+}
+
+.createAssessment .step-indicator::before {
+	content: "";
+	position: absolute;
+	width: 180px;
+	height: 2px;
+	background: rgba(25, 25, 25, 0.25);
+	left: 45px;
+	top: 50%;
+	transform: translateY(-50%);
+	transition: all 0.3s ease-in-out;
+	/* z-index: -1; */
+}
+
+.createAssessment .create__step:nth-child(3) .step-indicator::before {
+	width: 160px;
 }
 
 .create__step:last-child .step-indicator::before {
