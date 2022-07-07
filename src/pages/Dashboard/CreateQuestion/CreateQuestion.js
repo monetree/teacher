@@ -28,7 +28,6 @@ const steps = [
 ];
 
 const CreateQuestion = () => {
-
   const { questionData, setQuestionData } = React.useContext(QuestionContext);
 
   const [currentStep, setCurrentStep] = React.useState(0);
@@ -189,8 +188,8 @@ const CreateQuestion = () => {
                 currentStep === index
                   ? "create__step current"
                   : currentStep > index
-                    ? "create__step done"
-                    : "create__step"
+                  ? "create__step done"
+                  : "create__step"
               }
               key={index}
             >
@@ -262,8 +261,8 @@ const CreateQuestion = () => {
             {currentStep === steps.length - 3
               ? "Next: Preview"
               : currentStep === steps.length - 2
-                ? "Submit"
-                : `Next: ${steps[currentStep + 1]?.title}`}
+              ? "Submit"
+              : `Next: ${steps[currentStep + 1]?.title}`}
           </button>
         )}
       </div>

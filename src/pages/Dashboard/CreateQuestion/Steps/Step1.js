@@ -2,17 +2,29 @@ import React, { useContext } from "react";
 import QuestionContext from "../../../../context/QuestionContext";
 
 const Step1 = ({ data }) => {
-
   // react context api
   const { questionData, setQuestionData } = useContext(QuestionContext);
 
   // data states
-  const [curriculum, setCurriculum] = React.useState(questionData.step1 ? questionData.step1.curriculum : "");
-  const [grade, setGrade] = React.useState(questionData.step1 ? questionData.step1.grade : "");
-  const [subject, setSubject] = React.useState(questionData.step1 ? questionData.step1.subject : "");
-  const [stream, setStream] = React.useState(questionData.step1 ? questionData.step1.stream : "");
-  const [chapter, setChapter] = React.useState(questionData.step1 ? questionData.step1.chapter : "");
+  const [curriculum, setCurriculum] = React.useState(
+    questionData.step1 ? questionData.step1.curriculum : ""
+  );
+  const [grade, setGrade] = React.useState(
+    questionData.step1 ? questionData.step1.grade : ""
+  );
+  const [subject, setSubject] = React.useState(
+    questionData.step1 ? questionData.step1.subject : ""
+  );
+  const [stream, setStream] = React.useState(
+    questionData.step1 ? questionData.step1.stream : ""
+  );
+  const [chapter, setChapter] = React.useState(
+    questionData.step1 ? questionData.step1.chapter : ""
+  );
 
+  const [level, setLevel] = React.useState(
+    questionData.step1 ? questionData.step1.level : ""
+  );
 
   // dropdown change handlers
   const [curriculumDropdown, setCurriculumDropdown] = React.useState(false);
@@ -20,6 +32,7 @@ const Step1 = ({ data }) => {
   const [subjectDropdown, setSubjectDropdown] = React.useState(false);
   const [streamDropdown, setStreamDropdown] = React.useState(false);
   const [chapterDropdown, setChapterDropdown] = React.useState(false);
+  const [levelDropdown, setLevelDropdown] = React.useState(false);
 
   // data refs
   const curriculumRef = React.useRef();
@@ -27,6 +40,7 @@ const Step1 = ({ data }) => {
   const subjectRef = React.useRef();
   const streamRef = React.useRef();
   const chapterRef = React.useRef();
+  const levelRef = React.useRef();
 
   // detect click outside of dropdown
 
@@ -50,6 +64,10 @@ const Step1 = ({ data }) => {
       if (chapterRef.current && !chapterRef.current.contains(event.target)) {
         setChapterDropdown(false);
       }
+
+      if (levelRef.current && !levelRef.current.contains(event.target)) {
+        setLevelDropdown(false);
+      }
     };
 
     document.addEventListener("mousedown", handleClick);
@@ -61,7 +79,7 @@ const Step1 = ({ data }) => {
   // set data on state change
 
   React.useEffect(() => {
-    if (curriculum && grade && subject && stream && chapter) {
+    if (curriculum && grade && subject && stream && chapter && level) {
       setQuestionData({
         ...questionData,
         step1: {
@@ -70,10 +88,11 @@ const Step1 = ({ data }) => {
           subject,
           stream,
           chapter,
-        }
+          level,
+        },
       });
     }
-  }, [curriculum, grade, subject, stream, chapter]);
+  }, [curriculum, grade, subject, stream, chapter, level]);
 
   return (
     <div className="question_step1">
@@ -263,7 +282,38 @@ const Step1 = ({ data }) => {
           </div>
         </div>
 
-        <div className="w-50 d-flex flex-column"></div>
+        <div className="chapters w-50 d-flex flex-column">
+          <label>Difficulties</label>
+
+          <div className="streams-dropdown" ref={levelRef}>
+            <div
+              className="selected d-flex justify-content-between align-items-center"
+              onClick={() => setLevelDropdown(!streamDropdown)}
+            >
+              <span>
+                {level && level.id ? level.level_info : "Select Difficultie"}
+              </span>
+              <ion-icon name="chevron-down-outline"></ion-icon>
+            </div>
+
+            <ul className={levelDropdown ? "streamItems show" : "streamItems"}>
+              {data.getLevels.map((level, index) => {
+                return (
+                  <li
+                    key={index}
+                    className="streamItem"
+                    onClick={() => {
+                      setLevel(level);
+                      setLevelDropdown(false);
+                    }}
+                  >
+                    <span>{level.level_info}</span>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   );
