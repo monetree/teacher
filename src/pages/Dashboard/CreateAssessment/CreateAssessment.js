@@ -61,32 +61,6 @@ const CreateAssessmentComponent = () => {
     }
   `;
 
-  const QUESTION_QUERIES = gql`
-    query getQuestions(
-      $subjectRef: ID!
-      $gradeRef: ID!
-      $chapterRef: ID!
-      $streamRef: ID!
-      $curriculumRef: ID!
-    ) {
-      getQuestions(
-        subjectRef: $subjectRef
-        gradeRef: $gradeRef
-        chapterRef: $chapterRef
-        streamRef: $streamRef
-        curriculumRef: $curriculumRef
-      ) {
-        question_info
-        question_type
-        question_type
-        options
-        level
-        id
-        answer
-      }
-    }
-  `;
-
   const MUTATIONS = gql`
     mutation createQuestion(
       $subjectRef: String!
@@ -115,22 +89,6 @@ const CreateAssessmentComponent = () => {
   `;
 
   const [fetchQuestions, setFetchQuestions] = useState(false);
-
-  const {
-    loading: _loading2,
-    error: _error2,
-    data: _data2,
-  } = useQuery(QUESTION_QUERIES, {
-    variables: fetchQuestions
-      ? {
-          subjectRef: assessmentData.step1.subject.id,
-          gradeRef: assessmentData.step1.grade.id,
-          chapterRef: assessmentData.step1.chapter.id,
-          streamRef: assessmentData.step1.stream.id,
-          curriculumRef: assessmentData.step1.curriculum.id,
-        }
-      : {},
-  });
 
   const stepValidator = () => {
     if (currentStep === 0) {
@@ -229,9 +187,15 @@ const CreateAssessmentComponent = () => {
         <div className="step__content">
           {currentStep === 0 && <Step1 data={data} />}
         </div>
-      ) : _data2 && _data2.getQuestions ? (
+      ) : data &&
+        data.getCurriculums &&
+        currentStep === 1 &&
+        assessmentData &&
+        assessmentData.step1 &&
+        assessmentData.step1.subject ? (
         <div className="step__content">
-          {currentStep === 1 && <Step2 data={_data2} />}
+          +++++ {assessmentData.step1.subject.id}
+          {currentStep === 1 && <Step2 />}
           {currentStep === 2 && <Step3 goto={setCurrentStep} />}
           {currentStep === 3 && <Step4 goto={setCurrentStep} />}
         </div>
