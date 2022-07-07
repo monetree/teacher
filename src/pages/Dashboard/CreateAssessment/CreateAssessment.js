@@ -193,14 +193,12 @@ const CreateAssessmentComponent = () => {
         assessmentData &&
         assessmentData.step1 &&
         assessmentData.step1.subject ? (
-        <div className="step__content">
-          +++++ {assessmentData.step1.subject.id}
-          {currentStep === 1 && <Step2 />}
-          {currentStep === 2 && <Step3 goto={setCurrentStep} />}
-          {currentStep === 3 && <Step4 goto={setCurrentStep} />}
-        </div>
+        <div className="step__content">{currentStep === 1 && <Step2 />}</div>
       ) : (
-        <div className="step__content"></div>
+        <div className="step__content">
+          {currentStep === 2 && <Step3 goto={setCurrentStep} />}
+          {currentStep === 3 && <Step4 goto={setCurrentStep} data={_data} />}
+        </div>
       )}
 
       {/* ------------------ this is step navigation ---------------------- */}
