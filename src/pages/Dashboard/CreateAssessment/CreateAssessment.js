@@ -62,7 +62,7 @@ const CreateAssessmentComponent = () => {
   `;
 
   const MUTATIONS = gql`
-    mutation createQuestion(
+    mutation createAssessment(
       $subjectRef: String!
       $gradeRef: String!
       $chapterRef: String!
@@ -72,6 +72,7 @@ const CreateAssessmentComponent = () => {
       $published: Boolean!
       $assessment_name: String!
       $questions: [String!]
+      $time: String!
     ) {
       createAssessment(
         subjectRef: $subjectRef
@@ -83,6 +84,7 @@ const CreateAssessmentComponent = () => {
         published: $published
         questions: $questions
         assessment_name: $assessment_name
+        time: $time
       ) {
         published
         assessment_id
@@ -131,6 +133,7 @@ const CreateAssessmentComponent = () => {
     const published = _published;
     const questions = ids;
     const assessment_name = data.assessmentName;
+    const time = "30";
 
     createAssessment({
       variables: {
@@ -143,6 +146,7 @@ const CreateAssessmentComponent = () => {
         published,
         questions,
         assessment_name,
+        time,
       },
     });
 
