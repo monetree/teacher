@@ -5,9 +5,13 @@
   "dependencies": {
     "@amcharts/amcharts4": "^4.9.16",
     "@apollo/client": "^3.6.9",
+    "@ckeditor/ckeditor5-build-classic": "^34.2.0",
+    "@ckeditor/ckeditor5-react": "^5.0.2",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "ckeditor5-build-classic-mathtype": "^1.0.0",
+    "ckeditor5-classic-with-mathtype": "^1.0.0",
     "graphql": "^16.5.0",
     "mdbreact": "^5.2.0",
     "react": "^18.2.0",
