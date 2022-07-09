@@ -1,10 +1,9 @@
 import React from "react";
+import Editor from "../../../../components/editor/editor";
 import QuestionContext from "../../../../context/QuestionContext";
 
 const Step3 = () => {
-
   const { questionData, setQuestionData } = React.useContext(QuestionContext);
-
 
   // data states
   const [question, setQuestion] = React.useState(
@@ -22,7 +21,9 @@ const Step3 = () => {
   const [option4, setOption4] = React.useState(
     questionData.step3 ? questionData.step3.options[3] : ""
   );
-  const [answer, setAnswer] = React.useState(questionData.step3 ? questionData.step3.answer : 0);
+  const [answer, setAnswer] = React.useState(
+    questionData.step3 ? questionData.step3.answer : 0
+  );
 
   // data refs
   const questionRef = React.useRef();
@@ -55,6 +56,7 @@ const Step3 = () => {
       <div className="step3__input1 d-flex flex-column">
         <label htmlFor="fullQuestion">Question</label>
 
+        <Editor />
         <textarea
           ref={questionRef}
           onChange={() => setQuestion(questionRef.current.value)}
@@ -75,7 +77,9 @@ const Step3 = () => {
             onChange={() => setOption1(option1Ref.current.value)}
             id="option1"
             name="option1"
-            defaultValue={questionData.step3 ? questionData.step3.options[0] : ""}
+            defaultValue={
+              questionData.step3 ? questionData.step3.options[0] : ""
+            }
           ></textarea>
 
           <label className="markAs">
@@ -84,8 +88,8 @@ const Step3 = () => {
                 questionData.step3 && questionData.step3.answer === 1
                   ? "active"
                   : answer === 1
-                    ? "active"
-                    : ""
+                  ? "active"
+                  : ""
               }
             >
               <ion-icon name="checkmark-outline"></ion-icon>
@@ -95,7 +99,9 @@ const Step3 = () => {
               name="correct"
               value="option1"
               onChange={() => selectAnswer(answer === 1 ? 0 : 1)}
-              defaultChecked={questionData.step3 ? questionData.step3.answer === 1 : false}
+              defaultChecked={
+                questionData.step3 ? questionData.step3.answer === 1 : false
+              }
             />
             <span>Mark as correct answer</span>
           </label>
@@ -109,7 +115,9 @@ const Step3 = () => {
             onChange={() => setOption2(option2Ref.current.value)}
             id="option2"
             name="option2"
-            defaultValue={questionData.step3 ? questionData.step3.options[1] : ""}
+            defaultValue={
+              questionData.step3 ? questionData.step3.options[1] : ""
+            }
           ></textarea>
 
           <label className="markAs">
@@ -118,8 +126,8 @@ const Step3 = () => {
                 questionData.step3 && questionData.step3.answer === 2
                   ? "active"
                   : answer === 2
-                    ? "active"
-                    : ""
+                  ? "active"
+                  : ""
               }
             >
               <ion-icon name="checkmark-outline"></ion-icon>
@@ -129,7 +137,9 @@ const Step3 = () => {
               name="correct"
               value="option2"
               onChange={() => selectAnswer(answer === 2 ? 0 : 2)}
-              defaultChecked={questionData.step3 ? questionData.step3.answer === 2 : false}
+              defaultChecked={
+                questionData.step3 ? questionData.step3.answer === 2 : false
+              }
             />
             <span>Mark as correct answer</span>
           </label>
@@ -145,7 +155,9 @@ const Step3 = () => {
             onChange={() => setOption3(option3Ref.current.value)}
             id="option3"
             name="option3"
-            defaultValue={questionData.step3 ? questionData.step3.options[2] : ""}
+            defaultValue={
+              questionData.step3 ? questionData.step3.options[2] : ""
+            }
           ></textarea>
 
           <label className="markAs">
@@ -154,8 +166,8 @@ const Step3 = () => {
                 questionData.step3 && questionData.step3.answer === 3
                   ? "active"
                   : answer === 3
-                    ? "active"
-                    : ""
+                  ? "active"
+                  : ""
               }
             >
               <ion-icon name="checkmark-outline"></ion-icon>
@@ -165,7 +177,9 @@ const Step3 = () => {
               name="correct"
               value="option3"
               onChange={() => selectAnswer(answer === 3 ? 0 : 3)}
-              defaultChecked={questionData.step3 ? questionData.step3.answer === 3 : false}
+              defaultChecked={
+                questionData.step3 ? questionData.step3.answer === 3 : false
+              }
             />
             <span>Mark as correct answer</span>
           </label>
@@ -179,7 +193,9 @@ const Step3 = () => {
             onChange={() => setOption4(option4Ref.current.value)}
             id="option4"
             name="option4"
-            defaultValue={questionData.step3 ? questionData.step3.options[3] : ""}
+            defaultValue={
+              questionData.step3 ? questionData.step3.options[3] : ""
+            }
           ></textarea>
 
           <label className="markAs">
@@ -188,8 +204,8 @@ const Step3 = () => {
                 questionData.step3 && questionData.step3.answer === 4
                   ? "active"
                   : answer === 4
-                    ? "active"
-                    : ""
+                  ? "active"
+                  : ""
               }
             >
               <ion-icon name="checkmark-outline"></ion-icon>
@@ -199,7 +215,9 @@ const Step3 = () => {
               name="correct"
               value="option4"
               onChange={() => selectAnswer(answer === 4 ? 0 : 4)}
-              defaultChecked={questionData.step3 ? questionData.step3.answer === 4 : false}
+              defaultChecked={
+                questionData.step3 ? questionData.step3.answer === 4 : false
+              }
             />
             <span>Mark as correct answer</span>
           </label>

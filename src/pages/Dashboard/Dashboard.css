@@ -1,58 +1,58 @@
 .dashboard__page .topbar {
-	background: #0b3d5a;
-	height: 78px;
-	position: fixed;
-	width: 100%;
-	z-index: 100000000000;
+  background: #f17d3a;
+  height: 78px;
+  position: fixed;
+  width: 100%;
+  z-index: 100000000000;
 }
 
 .dashboard__page .topbar .logo img {
-	width: 40px;
-	height: 40px;
+  /* width: 40px; */
+  height: 40px;
 }
 
 .dashboard__page .topbar .logo h2 {
-	font-size: 30px;
-	font-weight: 800;
+  font-size: 30px;
+  font-weight: 800;
 }
 
 .search {
-	position: relative;
-	background: #fff;
-	border-radius: 40px;
+  position: relative;
+  background: #fff;
+  border-radius: 40px;
 }
 
 .search input {
-	border: none;
-	padding: 10px 0px 10px 20px;
-	font-size: 17px;
-	color: #191919c7;
-	background: #fff;
-	font-weight: 700;
-	outline: none;
-	letter-spacing: 0.5px;
-	border-radius: 45px;
+  border: none;
+  padding: 10px 0px 10px 20px;
+  font-size: 17px;
+  color: #191919c7;
+  background: #fff;
+  font-weight: 700;
+  outline: none;
+  letter-spacing: 0.5px;
+  border-radius: 45px;
 }
 
 .search ion-icon {
-	font-size: 20px;
-	color: #191919c7;
-	margin-left: 10px;
-	padding-right: 20px;
+  font-size: 20px;
+  color: #191919c7;
+  margin-left: 10px;
+  padding-right: 20px;
 }
 
 .search__result {
-	position: absolute;
-	top: 100%;
-	left: 20px;
-	width: 70%;
-	background: #fff;
-	border: 1px solid #b8b8b8;
-	border-radius: 0px 0px 15px 15px;
-	padding: 10px;
-	box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.4);
-	z-index: 1;
-	/* display: none; */
+  position: absolute;
+  top: 100%;
+  left: 20px;
+  width: 70%;
+  background: #fff;
+  border: 1px solid #b8b8b8;
+  border-radius: 0px 0px 15px 15px;
+  padding: 10px;
+  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.4);
+  z-index: 1;
+  /* display: none; */
 }
 
 /* .search input:focus ~ .search__result {
@@ -60,233 +60,233 @@
 } */
 
 .search__result ul {
-	padding: 0;
-	margin: 0;
-	list-style: none;
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 
 .searched__item {
-	cursor: pointer;
-	display: flex;
-	padding: 8px;
+  cursor: pointer;
+  display: flex;
+  padding: 8px;
 }
 
 .searched__item:hover {
-	background: #efefef;
+  background: #efefef;
 }
 
 .searched__item .info {
-	flex: 80%;
+  flex: 80%;
 }
 
 .searched__item .info h6 {
-	font-size: 17px;
-	font-weight: 700;
-	color: #191919c7;
-	margin: 0px;
+  font-size: 17px;
+  font-weight: 700;
+  color: #191919c7;
+  margin: 0px;
 }
 
 .searched__item .info > div span {
-	font-size: 14px;
-	font-weight: 400;
-	color: #191919c7;
-	margin: 0px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #191919c7;
+  margin: 0px;
 }
 
 .searched__item .search_status {
-	flex: 20%;
-	font-size: 14px;
-	font-weight: 500;
-	text-align: left;
+  flex: 20%;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
 }
 
 .topbar button {
-	border: none;
-	outline: none;
-	border: 2px solid #fff;
-	border-radius: 10px;
-	background: transparent;
-	padding-left: 40px !important;
+  border: none;
+  outline: none;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  background: transparent;
+  padding-left: 40px !important;
 }
 
 .topbar button ion-icon {
-	font-size: 18px;
-	color: #fff;
-	margin-right: 5px;
-	--ionicon-stroke-width: 40px;
+  font-size: 18px;
+  color: #fff;
+  margin-right: 5px;
+  --ionicon-stroke-width: 40px;
 }
 
 .user ion-icon {
-	font-size: 30px;
-	color: #fff;
-	--ionicon-stroke-width: 30px;
+  font-size: 30px;
+  color: #fff;
+  --ionicon-stroke-width: 30px;
 }
 
 .dashboard {
-	min-height: calc(100vh - 78px);
+  min-height: calc(100vh - 78px);
 }
 
 /* sidebar */
 
 .sidebar {
-	background: #fff;
-	width: 300px;
-	height: calc(100vh - 78px);
-	padding-left: 30px;
-	padding-top: 20px;
-	border-right: 2px solid rgba(48, 48, 48, 0.192);
-	margin-top: 78px;
+  background: #fff;
+  width: 300px;
+  height: calc(100vh - 78px);
+  padding-left: 30px;
+  padding-top: 20px;
+  border-right: 2px solid rgba(48, 48, 48, 0.192);
+  margin-top: 78px;
 }
 
 .sidebar ul {
-	list-style: none;
-	padding: 0px;
-	margin: 0px;
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
 }
 
 .sidebar ul li {
-	padding: 10px 0px;
+  padding: 10px 0px;
 }
 
 .sidebar ul li a {
-	font-size: 18px;
-	color: #191919a0;
-	text-decoration: none;
-	font-weight: 700;
+  font-size: 18px;
+  color: #191919a0;
+  text-decoration: none;
+  font-weight: 700;
 }
 
 .sidebar ul li a:hover {
-	color: #0b3d5a;
+  color: #f17d3a;
 }
 
 .sidebar ul li a.active {
-	color: #191919;
+  color: #191919;
 }
 
 .sidebar ul li button {
-	padding: 0;
-	border: none;
-	outline: none;
-	font-size: 18px;
-	color: #191919a0;
-	text-decoration: none;
-	font-weight: 700;
-	background: transparent;
+  padding: 0;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  color: #191919a0;
+  text-decoration: none;
+  font-weight: 700;
+  background: transparent;
 }
 
 .content {
-	background: #eff3f5;
-	margin-top: 78px;
+  background: #eff3f5;
+  margin-top: 78px;
 }
 
 .create__modal {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100vh;
-	background: rgba(0, 0, 0, 0.5);
-	display: none;
-	justify-content: center;
-	align-items: center;
-	z-index: 100;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
 }
 
 .create__modal.show {
-	display: flex;
+  display: flex;
 }
 
 .create__modal__content {
-	position: relative;
-	width: 100%;
-	max-width: 680px;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	background: #fff;
-	border-radius: 10px;
-	padding: 30px 70px 40px 70px;
-	box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.4);
+  position: relative;
+  width: 100%;
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  border-radius: 10px;
+  padding: 30px 70px 40px 70px;
+  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.4);
 }
 
 .modal-close {
-	position: absolute;
-	top: 13px;
-	right: 13px;
-	padding: 4px 7px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background: transparent;
-	border: none;
-	border-radius: 5px;
+  position: absolute;
+  top: 13px;
+  right: 13px;
+  padding: 4px 7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  border: none;
+  border-radius: 5px;
 }
 
 .modal-close:hover {
-	background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .modal-close ion-icon {
-	font-size: 32px;
-	color: #191919c7;
-	--ionicon-stroke-width: 40px;
+  font-size: 32px;
+  color: #191919c7;
+  --ionicon-stroke-width: 40px;
 }
 
 .create__modal__content > h3 {
-	font-size: 26px;
-	font-weight: 700;
-	color: #191919c7;
+  font-size: 26px;
+  font-weight: 700;
+  color: #191919c7;
 }
 
 .create__modal__content > p {
-	font-size: 17px;
-	font-weight: 600;
-	color: rgba(25, 25, 25, 0.6);
-	margin: 0px;
+  font-size: 17px;
+  font-weight: 600;
+  color: rgba(25, 25, 25, 0.6);
+  margin: 0px;
 }
 
 .create__modal__options {
-	width: 100%;
-	display: flex;
-	gap: 30px;
-	justify-content: space-between;
-	align-items: center;
-	margin-top: 30px;
+  width: 100%;
+  display: flex;
+  gap: 30px;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
 }
 
 .create__modal__options button {
-	flex: 50%;
-	background: transparent;
-	border-radius: 8px;
-	border: 2px solid rgba(25, 25, 25, 0.2);
-	padding: 50px 20px 20px 20px;
-	transition: 0.2s;
+  flex: 50%;
+  background: transparent;
+  border-radius: 8px;
+  border: 2px solid rgba(25, 25, 25, 0.2);
+  padding: 50px 20px 20px 20px;
+  transition: 0.2s;
 }
 
 .create__modal__options button:hover,
 .create__modal__options button:focus {
-	background: #eff9ff;
-	border-color: #0d4b6f;
+  background: #eff9ff;
+  border-color: #f17d3a;
 }
 
 .create__modal__options button img {
-	width: 70px;
-	height: 70px;
-	margin-bottom: 20px;
+  width: 70px;
+  height: 70px;
+  margin-bottom: 20px;
 }
 
 .create__modal__options button h5 {
-	font-size: 18px;
-	font-weight: 700;
-	color: #191919c7;
-	margin: 0px;
-	margin-bottom: 5px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #191919c7;
+  margin: 0px;
+  margin-bottom: 5px;
 }
 
 .create__modal__options button p {
-	font-size: 14px;
-	font-weight: 400;
-	color: #191919c7;
-	margin: 0px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #191919c7;
+  margin: 0px;
 }

@@ -6,41 +6,10 @@ import DatatablePage from "../charts/dataTable";
 import Avatar from "../../assets/image 10.png";
 import QuestionsPage from "../charts/questionsTable";
 
-const Assessment = () => {
+const Assessment = ({ assessmentId, setAssessmentId, tab, setTab }) => {
   const QUERIES = gql`
     query {
-      getAssessments(teacherRef: "62a827022ed38fb4323c53cd") {
-        id
-        subject
-        name
-        grade
-        published
-      }
-
-      getAssessmentScorecard(assessmentRef: "62aee40f28539421a30a8664") {
-        userRef
-        id
-        completed
-        createdAt
-        updatedAt
-        failed
-        passed
-        skipped
-        time
-        score
-      }
-      getStudentScorecard(
-        assessmentRef: "62aee40f28539421a30a8664"
-        userRef: "62a4360fb009ea33976c040b"
-      ) {
-        id
-        status
-        level
-        question
-        answer
-      }
-
-      getStudents(assessment_id: "991671") {
+      getStudents(assessment_id: "985241") {
         id
         name
         email
@@ -51,11 +20,27 @@ const Assessment = () => {
     }
   `;
 
-  const { loading, error, data } = useQuery(QUERIES);
-  const [assessmentId, setAssessmentId] = useState(null);
-  const [assessmentIdQuestion, setAssessmentIdQuestion] = useState(null);
+  const ASSESSMENT_QUERIES = gql`
+    query getAssessments($teacherRef: String!) {
+      getAssessments(teacherRef: $teacherRef) {
+        id
+        subject
+        name
+        grade
+        published
+        assessment_name
+        createdAt
+      }
+    }
+  `;
 
-  const [tab, setTab] = useState(1);
+  const { loading, error, data } = useQuery(ASSESSMENT_QUERIES, {
+    variables: {
+      teacherRef: localStorage.getItem("teacher"),
+    },
+  });
+
+  const [assessmentIdQuestion, setAssessmentIdQuestion] = useState(null);
 
   useEffect(() => {
     if (assessmentId) {
@@ -75,11 +60,12 @@ const Assessment = () => {
         <h2 className="mb-4">All Assessments</h2>
       ) : tab === 2 ? (
         <h5 className="mb-4" style={{ color: "rgba(25, 25, 25, 0.8)" }}>
-          All Assessments &#62; Assessment 3
+          All Assessments &#62; {assessmentId.assessment_name}
         </h5>
       ) : (
         <h5 className="mb-4" style={{ color: "rgba(25, 25, 25, 0.8)" }}>
-          All Assessments &#62; Assessment 3 &#62; Ella johnson
+          All Assessments &#62; {assessmentId.assessment_name} &#62;{" "}
+          {assessmentIdQuestion.name}
         </h5>
       )}
 
@@ -105,7 +91,7 @@ const Assessment = () => {
               {data.getAssessments.map((item) => {
                 return (
                   <tr key={item.id} onClick={() => setAssessmentId(item)}>
-                    <td>{item.name}</td>
+                    <td>{item.assessment_name}</td>
                     <td>{item.subject}</td>
                     <td>{item.grade}</td>
                     <td className="status">
@@ -114,7 +100,7 @@ const Assessment = () => {
                           item.published ? "btn btn-success" : "btn btn-warning"
                         }
                       >
-                        {item.published ? "Completed" : "Draft"}
+                        {item.published ? "Published" : "Draft"}
                       </button>
                     </td>
                   </tr>
@@ -130,21 +116,29 @@ const Assessment = () => {
           <div className="assessment-card">
             <div className="row">
               <div className="col-sm-6">
-                <h6>{assessmentId.name}</h6>
+                <h6>{assessmentId.assessment_name}</h6>
                 <h6 className="mb-5">
                   {assessmentId.subject} | {assessmentId.grade} | 60 Mins
                 </h6>
 
-                <h6>Published at: 12:22 AM, 23 June 2022</h6>
-                <h6>Assessment is in-progress</h6>
+                <h6>
+                  Published at:{" "}
+                  {new Date(parseInt(assessmentId.createdAt)).toDateString()}
+                  {" | "}
+                  {new Date(
+                    parseInt(assessmentId.createdAt)
+                  ).toLocaleTimeString()}
+                </h6>
+                <h6>
+                  Assessment is {assessmentId.published ? "Published" : "Draft"}
+                </h6>
               </div>
               <div className="col-sm-6">
                 <PieChart />
               </div>
             </div>
           </div>
-
-          {data && data.getAssessmentScorecard ? (
+          {assessmentId ? (
             <>
               <h5 className="mt-4">Scorecard </h5>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -170,7 +164,7 @@ const Assessment = () => {
 
               <DatatablePage
                 setAssessmentIdQuestion={setAssessmentIdQuestion}
-                data={data.getAssessmentScorecard}
+                assessment={assessmentId}
               />
 
               <div
@@ -208,8 +202,13 @@ const Assessment = () => {
                     </div>
 
                     <div className="col-sm-8">
-                      <h6>Ella johnson </h6>
-                      <h6 className="mb-5">Biology | Grade 7</h6>
+                      <h6>
+                        {assessmentIdQuestion ? assessmentIdQuestion.name : ""}
+                      </h6>
+                      <h6 className="mb-5">
+                        {assessmentId ? assessmentId.subject : ""} |{" "}
+                        {assessmentId ? assessmentId.grade : ""}
+                      </h6>
 
                       <h4>Score: 20</h4>
                     </div>
@@ -229,10 +228,10 @@ const Assessment = () => {
                     </div>
 
                     <div>
-                      <h6 className="mb-3">37: 30 min</h6>
-                      <h6 className="mb-3">10</h6>
-                      <h6 className="mb-3">2</h6>
-                      <h6 className="mb-2">3</h6>
+                      <h6 className="mb-3">{assessmentIdQuestion.time} min</h6>
+                      <h6 className="mb-3">{assessmentIdQuestion.passed}</h6>
+                      <h6 className="mb-3">{assessmentIdQuestion.failed}</h6>
+                      <h6 className="mb-2">{assessmentIdQuestion.skipped}</h6>
                     </div>
                   </div>
                 </div>
@@ -240,7 +239,10 @@ const Assessment = () => {
             </div>
           </>
 
-          <h5 className="mt-4">Ella Johnson’s - Assessment Performance </h5>
+          <h5 className="mt-4">
+            {assessmentId ? assessmentId.assessment_name : ""} - Assessment
+            Performance
+          </h5>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <div>
               <span>Show</span>
@@ -261,8 +263,11 @@ const Assessment = () => {
               />
             </div>
           </div>
-          {data && data.getStudentScorecard ? (
-            <QuestionsPage data={data.getStudentScorecard} />
+          {assessmentIdQuestion && assessmentId ? (
+            <QuestionsPage
+              assessmentIdQuestion={assessmentIdQuestion}
+              assessment={assessmentId}
+            />
           ) : (
             ""
           )}

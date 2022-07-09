@@ -1,34 +1,60 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../../assets/logo.png";
-import questionIcon from '../../assets/question.png';
-import assessmentIcon from '../../assets/assessment.png';
+import questionIcon from "../../assets/question.png";
+import assessmentIcon from "../../assets/assessment.png";
 import "./Dashboard.css";
-import { Navigate, NavLink, Route, Routes, useNavigate } from "react-router-dom";
+import {
+  Navigate,
+  NavLink,
+  Route,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 import Assessment from "../../components/Assessment/Assessment";
-import { assessments } from "../../data";
 import CreateQuestion from "./CreateQuestion/CreateQuestion";
 import { QuestionProvider } from "../../context/QuestionContext";
 import CreateAssessment from "./CreateAssessment/CreateAssessment";
 import { AssessmentProvider } from "../../context/AssessmentContext";
+import { useQuery, gql } from "@apollo/client";
 
 const Dashboard = () => {
-
   const navigate = useNavigate();
 
   const searchRef = React.useRef();
   const [searched, setSearched] = React.useState([]);
+  const [assessmentId, setAssessmentId] = useState(null);
+  const [tab, setTab] = useState(1);
 
   // search assessment by name
+
+  const ASSESSMENT_QUERIES = gql`
+    query getAssessments($teacherRef: String!) {
+      getAssessments(teacherRef: $teacherRef) {
+        id
+        subject
+        name
+        grade
+        published
+        assessment_name
+        createdAt
+      }
+    }
+  `;
+
+  const { loading, error, data } = useQuery(ASSESSMENT_QUERIES, {
+    variables: {
+      teacherRef: localStorage.getItem("teacher"),
+    },
+  });
 
   const handleSearch = () => {
     const search = searchRef.current.value;
 
     if (search !== "") {
-      const filtered = assessments.filter((item) =>
-        item.name.toLowerCase().includes(search.toLowerCase())
+      const filtered = data.getAssessments.filter((item) =>
+        item.assessment_name.toLowerCase().includes(search.toLowerCase())
       );
       setSearched(filtered);
-      console.log(filtered);
     } else {
       setSearched([]);
     }
@@ -46,7 +72,6 @@ const Dashboard = () => {
     window.location = "/";
   };
 
-
   // close modal or open modal
 
   const [modal, setModal] = React.useState(false);
@@ -57,7 +82,13 @@ const Dashboard = () => {
   const handleCreateNavigate = (path) => {
     navigate(path);
     toggleModal();
-  }
+  };
+
+  const handleAssessment = (id) => {
+    setSearched([]);
+    setAssessmentId(id);
+    searchRef.current.value = "";
+  };
 
   return (
     <section className="dashboard__page">
@@ -84,19 +115,16 @@ const Dashboard = () => {
                   <li
                     key={item.id}
                     className="searched__item"
-                    onClick={() => {
-                      searchRef.current.value = item.name;
-                      setSearched([]);
-                    }}
+                    onClick={() => handleAssessment(item)}
                   >
                     <div className="info">
-                      <h6 className="m-0">{item.name}</h6>
+                      <h6 className="m-0">{item.assessment_name}</h6>
                       <div>
                         <span>{item.subject}</span> | <span>{item.grade}</span>
                       </div>
                     </div>
                     <div className="search_status">
-                      <span>{item.status}</span>
+                      <span>{item.published ? "Published" : "Draft"}</span>
                     </div>
                   </li>
                 ))}
@@ -105,7 +133,10 @@ const Dashboard = () => {
           )}
         </div>
 
-        <button onClick={toggleModal} className="d-flex align-items-center py-2 px-5 text-white">
+        <button
+          onClick={toggleModal}
+          className="d-flex align-items-center py-2 px-5 text-white"
+        >
           <ion-icon name="add-outline"></ion-icon>
           <span>Create</span>
         </button>
@@ -144,15 +175,33 @@ const Dashboard = () => {
         <div className="content w-100 py-4 px-5">
           <Routes>
             <Route index element={<Navigate to={"assessments"} />} />
-            <Route path="assessments" element={<Assessment />} />
+            <Route
+              path="assessments"
+              element={
+                <Assessment
+                  assessmentId={assessmentId}
+                  setAssessmentId={setAssessmentId}
+                  setTab={setTab}
+                  tab={tab}
+                />
+              }
+            />
             <Route path="profile" element={<h1>Profile Page</h1>} />
             <Route
               path="create/question"
-              element={<QuestionProvider><CreateQuestion /></QuestionProvider>}
+              element={
+                <QuestionProvider>
+                  <CreateQuestion />
+                </QuestionProvider>
+              }
             />
             <Route
               path="create/assessment"
-              element={<AssessmentProvider><CreateAssessment /></AssessmentProvider>}
+              element={
+                <AssessmentProvider>
+                  <CreateAssessment />
+                </AssessmentProvider>
+              }
             />
           </Routes>
         </div>
@@ -166,13 +215,13 @@ const Dashboard = () => {
             <p>Please choose the option</p>
 
             <div className="create__modal__options">
-              <button onClick={() => handleCreateNavigate('create/question')}>
+              <button onClick={() => handleCreateNavigate("create/question")}>
                 <img src={questionIcon} alt="" />
                 <h5>Question</h5>
                 <p>Create multiple choice question</p>
               </button>
 
-              <button onClick={() => handleCreateNavigate('create/assessment')}>
+              <button onClick={() => handleCreateNavigate("create/assessment")}>
                 <img src={assessmentIcon} alt="" />
                 <h5>Assessment</h5>
                 <p>Create a question collection </p>

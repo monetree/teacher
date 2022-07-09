@@ -1,6 +1,31 @@
 import React from "react";
+import { useQuery, gql } from "@apollo/client";
 
-const DatatablePage = ({ data, setAssessmentIdQuestion }) => {
+const DatatablePage = ({ assessment, setAssessmentIdQuestion }) => {
+  const ASSESSMENT_SCORECARD_QUERIES = gql`
+    query getAssessmentScorecard($assessmentRef: String!) {
+      getAssessmentScorecard(assessmentRef: $assessmentRef) {
+        userRef
+        id
+        completed
+        createdAt
+        updatedAt
+        failed
+        passed
+        skipped
+        time
+        score
+        name
+      }
+    }
+  `;
+
+  const { loading, error, data } = useQuery(ASSESSMENT_SCORECARD_QUERIES, {
+    variables: {
+      assessmentRef: assessment.id,
+    },
+  });
+
   return (
     <table className="dataTable">
       <colgroup>
@@ -24,22 +49,26 @@ const DatatablePage = ({ data, setAssessmentIdQuestion }) => {
           <th scope="col">Skipped</th>
         </tr>
       </thead>
-      <tbody>
-        {data.map((item, index) => {
-          return (
-            <tr key={item.id} onClick={() => setAssessmentIdQuestion(item)}>
-              <td>{index + 1}</td>
-              <td>{item.name}</td>
-              <td>{item.score}</td>
-              <td>{item.time}</td>
+      {data && data.getAssessmentScorecard ? (
+        <tbody>
+          {data.getAssessmentScorecard.map((item, index) => {
+            return (
+              <tr key={item.id} onClick={() => setAssessmentIdQuestion(item)}>
+                <td>{index + 1}</td>
+                <td>{item.name}</td>
+                <td>{item.score}</td>
+                <td>{item.time}</td>
 
-              <td>{item.failed}</td>
-              <td>{item.passed}</td>
-              <td>{item.skipped}</td>
-            </tr>
-          );
-        })}
-      </tbody>
+                <td>{item.failed}</td>
+                <td>{item.passed}</td>
+                <td>{item.skipped}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      ) : (
+        <tbody></tbody>
+      )}
     </table>
   );
 };

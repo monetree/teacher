@@ -10,6 +10,17 @@ const Step3 = ({ goto }) => {
         <div className="info__data flex-grow-1 d-flex">
           <div className="left w-50">
             <div className="data_cr">
+              <p>Assessment</p>
+              <h5>{assessmentData.step1.assessmentName}</h5>
+            </div>
+            <div className="data_sj">
+              <p>Chapter</p>
+              <h5>{assessmentData.step1.chapter.chapter_name}</h5>
+            </div>
+          </div>
+
+          <div className="left w-50">
+            <div className="data_cr">
               <p>Curriculum</p>
               <h5>{assessmentData.step1.curriculum.curriculum_shortname}</h5>
             </div>

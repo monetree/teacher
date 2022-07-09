@@ -2,7 +2,6 @@ import React from "react";
 import QuestionContext from "../../../../context/QuestionContext";
 
 const Step4 = ({ goto }) => {
-
   const { questionData } = React.useContext(QuestionContext);
 
   return (
@@ -86,13 +85,15 @@ const Step4 = ({ goto }) => {
             {questionData.step3.options.map((option, index) => (
               <div
                 className={
-                  questionData.step3.answer === index + 1 ? "option ans" : "option"
+                  parseInt(questionData.step3.answer) === index + 1
+                    ? "option ans"
+                    : "option"
                 }
                 key={index}
               >
                 <p>
                   Option {index + 1}{" "}
-                  {questionData.step3.answer === index + 1
+                  {parseInt(questionData.step3.answer) === index + 1
                     ? ": Marked as Answer"
                     : ""}
                 </p>

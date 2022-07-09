@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AssessmentContext from "../../../../context/AssessmentContext";
 
 const Step1 = ({ data }) => {
@@ -30,6 +30,7 @@ const Step1 = ({ data }) => {
   const [subjectDropdown, setSubjectDropdown] = React.useState(false);
   const [chapterDropdown, setChapterDropdown] = React.useState(false);
   const [streamDropdown, setStreamDropdown] = React.useState(false);
+  const [assessmentName, setAssessmentName] = useState(null);
 
   // data refs
   const curriculumRef = React.useRef();
@@ -80,10 +81,11 @@ const Step1 = ({ data }) => {
           subject,
           chapter,
           stream,
+          assessmentName,
         },
       });
     }
-  }, [curriculum, grade, subject, chapter, stream]);
+  }, [curriculum, grade, subject, chapter, stream, assessmentName]);
 
   return (
     <div className="question_step1">
@@ -270,6 +272,27 @@ const Step1 = ({ data }) => {
                 );
               })}
             </ul>
+          </div>
+        </div>
+
+        <div className="streams w-50 d-flex flex-column">
+          <label>Assessment Name</label>
+
+          <div className="streams-dropdown">
+            <div className="selected d-flex justify-content-between align-items-center">
+              <input
+                type="text"
+                style={{
+                  border: "none",
+                  outline: "none",
+                  fontSize: "20px",
+                  fontWeight: "bold",
+                  padding: "0",
+                }}
+                className="form-control font-weight-bold"
+                onChange={(e) => setAssessmentName(e.target.value)}
+              />
+            </div>
           </div>
         </div>
       </div>

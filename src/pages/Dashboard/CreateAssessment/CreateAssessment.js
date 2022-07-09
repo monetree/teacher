@@ -70,6 +70,7 @@ const CreateAssessmentComponent = () => {
       $curriculumRef: String!
       $teacherRef: String!
       $published: Boolean!
+      $assessment_name: String!
       $questions: [String!]
     ) {
       createAssessment(
@@ -81,6 +82,7 @@ const CreateAssessmentComponent = () => {
         teacherRef: $teacherRef
         published: $published
         questions: $questions
+        assessment_name: $assessment_name
       ) {
         published
         assessment_id
@@ -128,6 +130,7 @@ const CreateAssessmentComponent = () => {
     const teacherRef = localStorage.getItem("teacher");
     const published = true;
     const questions = ids;
+    const assessment_name = data.assessmentName;
 
     createAssessment({
       variables: {
@@ -139,6 +142,7 @@ const CreateAssessmentComponent = () => {
         teacherRef,
         published,
         questions,
+        assessment_name,
       },
     });
 
