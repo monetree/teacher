@@ -43,7 +43,7 @@
 .createQuestion .step-indicator::before {
   content: "";
   position: absolute;
-  width: 160px;
+  width: 192px;
   height: 2px;
   background: rgba(25, 25, 25, 0.25);
   left: 45px;

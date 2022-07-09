@@ -56,7 +56,7 @@ const Step3 = () => {
       <div className="step3__input1 d-flex flex-column">
         <label htmlFor="fullQuestion">Question</label>
 
-        <Editor />
+        {/* <Editor /> */}
         <textarea
           ref={questionRef}
           onChange={() => setQuestion(questionRef.current.value)}

@@ -32,6 +32,10 @@ const Step4 = ({ goto }) => {
               <p>Stream</p>
               <h5>{questionData.step1.stream.stream_info}</h5>
             </div>
+            <div className="data_str">
+              <p>Stream</p>
+              <h5>{questionData.step1.level.level_info}</h5>
+            </div>
           </div>
         </div>
         <div className="edit_step ms-5">
@@ -40,7 +44,7 @@ const Step4 = ({ goto }) => {
           </button>
         </div>
       </div>
-
+      {/* 
       <div className="qst__info2 bg-white d-flex gap-5">
         <div className="info__data d-flex flex-grow-1 gap-5">
           <div className="left w-50">
@@ -63,7 +67,7 @@ const Step4 = ({ goto }) => {
             Edit
           </button>
         </div>
-      </div>
+      </div> */}
 
       <div className="qst__title bg-white">
         <div className="info__data">

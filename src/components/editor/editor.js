@@ -27,42 +27,8 @@ class Editor extends Component {
           config={{
             toolbar: {
               shouldNotGroupWhenFull: true,
-              items: [
-                // 'heading', '|',
-                // 'fontfamily', 'fontsize', '|',
-                // 'alignment', '|',
-                // 'fontColor', 'fontBackgroundColor', '|',
-                // 'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', '|',
-                // 'link', '|',
-                // 'outdent', 'indent', '|',
-                // 'bulletedList', 'numberedList', 'todoList', '|',
-                // 'code', 'codeBlock', '|',
-                // 'insertTable', '|',
-                // 'uploadImage', 'blockQuote', '|',
-                "heading",
-                "fontsize",
-                "alignment",
-                "fontColor",
-                "fontBackgroundColor",
-                "outdent",
-                "indent",
-                "|",
-                "bold",
-                "italic",
-                "link",
-                "bulletedList",
-                "numberedList",
-                "imageUpload",
-                "mediaEmbed",
-                "insertTable",
-                "blockQuote",
-                "undo",
-                "redo",
-                "|",
-                "MathType",
-                "ChemType"
-              ]
-            }
+              items: ["bold", "|", "MathType", "ChemType"],
+            },
           }}
         />
       </div>

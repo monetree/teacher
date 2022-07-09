@@ -13,9 +13,9 @@ const steps = [
   {
     title: "Start",
   },
-  {
-    title: "Settings",
-  },
+  // {
+  //   title: "Settings",
+  // },
   {
     title: "Q&A",
   },
@@ -39,9 +39,7 @@ const CreateQuestion = () => {
       }
     }
     if (currentStep === 1) {
-      if (questionData.step2) {
-        setCurrentStep(currentStep + 1);
-      }
+      setCurrentStep(currentStep + 1);
     }
     if (currentStep === 2) {
       if (questionData.step3) {
@@ -127,13 +125,12 @@ const CreateQuestion = () => {
   const [createQuestion, { loading: _loading, error: _error, data: _data }] =
     useMutation(MUTATIONS);
 
-  const handleSubmit = () => {
+  const handleSubmit = (published_) => {
     const data = {
       ...questionData.step1,
       ...questionData.step2,
       ...questionData.step3,
     };
-    console.log(data);
 
     const question_info = data.question;
     const question_type = "MULTIPLE CHOICE";
@@ -142,11 +139,11 @@ const CreateQuestion = () => {
     const option_3 = data.options[2];
     const option_4 = data.options[3];
     const answer = data.answer.toString();
-    const published = true;
+    const published = published_;
     const subjectRef = data.subject.id;
     const gradeRef = data.grade.id;
     const chapterRef = data.chapter.id;
-    const levelRef = data.difficulty.id;
+    const levelRef = data.level.id;
     const streamRef = data.stream.id;
     const curriculumRef = data.curriculum.id;
 
@@ -195,10 +192,10 @@ const CreateQuestion = () => {
             >
               <div
                 className={
-                  index === 4 ? "step-indicator done" : "step-indicator"
+                  index === 3 ? "step-indicator done" : "step-indicator"
                 }
               >
-                {index === 4 ? (
+                {index === 3 ? (
                   <ion-icon name="checkmark-outline"></ion-icon>
                 ) : (
                   index + 1
@@ -215,10 +212,10 @@ const CreateQuestion = () => {
       {data && data.getCurriculums ? (
         <div className="step__content">
           {currentStep === 0 && <Step1 data={data} />}
-          {currentStep === 1 && <Step2 data={data} />}
-          {currentStep === 2 && <Step3 />}
-          {currentStep === 3 && <Step4 goto={setCurrentStep} />}
-          {currentStep === 4 && <Step5 goto={setCurrentStep} />}
+          {/* {currentStep === 1 && <Step2 data={data} />} */}
+          {currentStep === 1 && <Step3 />}
+          {currentStep === 2 && <Step4 goto={setCurrentStep} />}
+          {currentStep === 3 && <Step5 goto={setCurrentStep} />}
         </div>
       ) : (
         <div className="step__content"></div>
@@ -243,27 +240,28 @@ const CreateQuestion = () => {
         {currentStep === steps.length - 1 ? (
           <span></span>
         ) : (
-          <button
-            className="step__next"
-            onClick={() => {
-              if (currentStep === steps.length - 2) {
-                handleSubmit();
-              } else {
-                stepValidator();
+          <>
+            <button
+              className="step__next"
+              onClick={() => {
+                if (currentStep === 2) {
+                  handleSubmit(true);
+                } else {
+                  stepValidator();
+                }
+              }}
+              disabled={
+                (currentStep === 0 && !questionData.step1) ||
+                (currentStep === 2 && !questionData.step3)
               }
-            }}
-            disabled={
-              (currentStep === 0 && !questionData.step1) ||
-              (currentStep === 1 && !questionData.step2) ||
-              (currentStep === 2 && !questionData.step3)
-            }
-          >
-            {currentStep === steps.length - 3
-              ? "Next: Preview"
-              : currentStep === steps.length - 2
-              ? "Submit"
-              : `Next: ${steps[currentStep + 1]?.title}`}
-          </button>
+            >
+              {currentStep === steps.length - 3
+                ? "Next: Preview"
+                : currentStep === steps.length - 2
+                ? "Submit"
+                : `Next: ${steps[currentStep + 1]?.title}`}
+            </button>
+          </>
         )}
       </div>
     </div>

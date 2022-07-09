@@ -89,6 +89,11 @@ const Step2 = () => {
       if (i.id === data) {
         setSelelctedQuestions([...selelctedQuestions, i]);
         setQuestions(questions.filter((item) => item.id !== data));
+
+        setAssessmentData({
+          ...assessmentData,
+          step2: [...assessmentData.step2, i],
+        });
       }
     }
   };
@@ -102,6 +107,11 @@ const Step2 = () => {
         setSelelctedQuestions(
           selelctedQuestions.filter((item) => item.id !== data)
         );
+
+        setAssessmentData({
+          ...assessmentData,
+          step2: selelctedQuestions.filter((item) => item.id !== data),
+        });
       }
     }
   };
