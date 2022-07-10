@@ -73,7 +73,7 @@ const QuestionsPage = ({ assessmentIdQuestion, assessment }) => {
 
     if (inputText) {
       var newAr = arrayForSort.filter(function (applicant) {
-        return applicant.name
+        return applicant.question
           .toLocaleLowerCase()
           .includes(inputText.toLocaleLowerCase());
       });
