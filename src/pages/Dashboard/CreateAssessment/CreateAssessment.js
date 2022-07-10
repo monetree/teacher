@@ -62,7 +62,7 @@ const CreateAssessmentComponent = () => {
   `;
 
   const MUTATIONS = gql`
-    mutation createQuestion(
+    mutation createAssessment(
       $subjectRef: String!
       $gradeRef: String!
       $chapterRef: String!
@@ -72,6 +72,7 @@ const CreateAssessmentComponent = () => {
       $published: Boolean!
       $assessment_name: String!
       $questions: [String!]
+      $time: String!
     ) {
       createAssessment(
         subjectRef: $subjectRef
@@ -83,6 +84,7 @@ const CreateAssessmentComponent = () => {
         published: $published
         questions: $questions
         assessment_name: $assessment_name
+        time: $time
       ) {
         published
         assessment_id
@@ -110,7 +112,7 @@ const CreateAssessmentComponent = () => {
   const [createAssessment, { loading: _loading, error: _error, data: _data }] =
     useMutation(MUTATIONS);
 
-  const handleSubmit = () => {
+  const handleSubmit = (_published) => {
     const data = {
       ...assessmentData.step1,
       questions: [...assessmentData.step2],
@@ -128,9 +130,10 @@ const CreateAssessmentComponent = () => {
     const streamRef = data.stream.id;
     const curriculumRef = data.curriculum.id;
     const teacherRef = localStorage.getItem("teacher");
-    const published = true;
+    const published = _published;
     const questions = ids;
     const assessment_name = data.assessmentName;
+    const time = "30";
 
     createAssessment({
       variables: {
@@ -143,6 +146,7 @@ const CreateAssessmentComponent = () => {
         published,
         questions,
         assessment_name,
+        time,
       },
     });
 
@@ -224,26 +228,39 @@ const CreateAssessmentComponent = () => {
         {currentStep === steps.length - 1 ? (
           <span></span>
         ) : (
-          <button
-            className="step__next"
-            onClick={() => {
-              if (currentStep === steps.length - 2) {
-                handleSubmit();
-              } else {
-                stepValidator();
+          <>
+            {currentStep === 2 ? (
+              <button
+                className="step__next"
+                onClick={() => handleSubmit(false)}
+              >
+                Draft
+              </button>
+            ) : (
+              ""
+            )}
+
+            <button
+              className="step__next"
+              onClick={() => {
+                if (currentStep === steps.length - 2) {
+                  handleSubmit(true);
+                } else {
+                  stepValidator();
+                }
+              }}
+              disabled={
+                (currentStep === 0 && !assessmentData.step1) ||
+                (currentStep === 1 && !(assessmentData.step2.length > 0))
               }
-            }}
-            disabled={
-              (currentStep === 0 && !assessmentData.step1) ||
-              (currentStep === 1 && !(assessmentData.step2.length > 0))
-            }
-          >
-            {currentStep === 1
-              ? "Next: Preview"
-              : currentStep === 2
-              ? "Submit"
-              : `Next: ${steps[currentStep + 1]?.title}`}
-          </button>
+            >
+              {currentStep === 1
+                ? "Next: Preview"
+                : currentStep === 2
+                ? "Publish"
+                : `Next: ${steps[currentStep + 1]?.title}`}
+            </button>
+          </>
         )}
       </div>
     </div>
