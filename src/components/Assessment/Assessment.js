@@ -7,19 +7,6 @@ import Avatar from "../../assets/image 10.png";
 import QuestionsPage from "../charts/questionsTable";
 
 const Assessment = ({ assessmentId, setAssessmentId, tab, setTab }) => {
-  const QUERIES = gql`
-    query {
-      getStudents(assessment_id: "985241") {
-        id
-        name
-        email
-        number
-        completed
-        coin
-      }
-    }
-  `;
-
   const ASSESSMENT_QUERIES = gql`
     query getAssessments($teacherRef: String!) {
       getAssessments(teacherRef: $teacherRef) {
@@ -30,6 +17,7 @@ const Assessment = ({ assessmentId, setAssessmentId, tab, setTab }) => {
         published
         assessment_name
         createdAt
+        time
       }
     }
   `;
@@ -118,7 +106,8 @@ const Assessment = ({ assessmentId, setAssessmentId, tab, setTab }) => {
               <div className="col-sm-6">
                 <h6>{assessmentId.assessment_name}</h6>
                 <h6 className="mb-5">
-                  {assessmentId.subject} | {assessmentId.grade} | 60 Mins
+                  {assessmentId.subject} | {assessmentId.grade} |{" "}
+                  {assessmentId.time} Mins
                 </h6>
 
                 <h6>
@@ -141,50 +130,11 @@ const Assessment = ({ assessmentId, setAssessmentId, tab, setTab }) => {
           {assessmentId ? (
             <>
               <h5 className="mt-4">Scorecard </h5>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div>
-                  <span>Show</span>
-                  <select className="pagination-number">
-                    <option>10</option>
-                    <option>10</option>
-                    <option>10</option>
-                    <option>10</option>
-                  </select>
-                  <span>entries</span>
-                </div>
-
-                <div>
-                  <input
-                    className="form-control"
-                    type={"text"}
-                    placeholder="Search"
-                  />
-                </div>
-              </div>
 
               <DatatablePage
                 setAssessmentIdQuestion={setAssessmentIdQuestion}
                 assessment={assessmentId}
               />
-
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  marginTop: "20px",
-                }}
-              >
-                <div>
-                  <span>Showing 10 of 20 questions</span>
-                </div>
-
-                <div className="pagination-num">
-                  <span className="prev-page">&#60;</span>
-                  <span className="active-page">1</span>
-                  <span>2</span>
-                  <span className="next-page">&#62;</span>
-                </div>
-              </div>
             </>
           ) : (
             ""
@@ -243,26 +193,7 @@ const Assessment = ({ assessmentId, setAssessmentId, tab, setTab }) => {
             {assessmentId ? assessmentId.assessment_name : ""} - Assessment
             Performance
           </h5>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <div>
-              <span>Show</span>
-              <select className="pagination-number">
-                <option>10</option>
-                <option>10</option>
-                <option>10</option>
-                <option>10</option>
-              </select>
-              <span>entries</span>
-            </div>
 
-            <div>
-              <input
-                className="form-control"
-                type={"text"}
-                placeholder="Search"
-              />
-            </div>
-          </div>
           {assessmentIdQuestion && assessmentId ? (
             <QuestionsPage
               assessmentIdQuestion={assessmentIdQuestion}
@@ -271,25 +202,6 @@ const Assessment = ({ assessmentId, setAssessmentId, tab, setTab }) => {
           ) : (
             ""
           )}
-
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginTop: "20px",
-            }}
-          >
-            <div>
-              <span>Showing 10 of 20 questions</span>
-            </div>
-
-            <div className="pagination-num">
-              <span className="prev-page">&#60;</span>
-              <span className="active-page">1</span>
-              <span>2</span>
-              <span className="next-page">&#62;</span>
-            </div>
-          </div>
         </>
       )}
     </div>

@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery, gql } from "@apollo/client";
+import SortIcon from "../../assets/sort-solid.svg";
 
 const DatatablePage = ({ assessment, setAssessmentIdQuestion }) => {
   const ASSESSMENT_SCORECARD_QUERIES = gql`
@@ -13,9 +14,9 @@ const DatatablePage = ({ assessment, setAssessmentIdQuestion }) => {
         failed
         passed
         skipped
-        time
         score
         name
+        time
       }
     }
   `;
@@ -26,50 +27,172 @@ const DatatablePage = ({ assessment, setAssessmentIdQuestion }) => {
     },
   });
 
+  const [scorecards, setScorecards] = useState([]);
+  const [currentData, setCurrentData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [sortField, setSortField] = useState(null);
+  const [sortType, setSortType] = useState(null);
+  const [inputText, setInputText] = useState("");
+
+  const nextPage = () => {
+    setCurrentPage(currentPage + 1);
+  };
+
+  const prevPage = () => {
+    if (currentPage === 1) return;
+    setCurrentPage(currentPage - 1);
+  };
+
+  useEffect(() => {
+    setCurrentData(scorecards.slice(currentPage - 1, currentPage));
+  }, [currentPage]);
+
+  useEffect(() => {
+    if (data && data.getAssessmentScorecard) {
+      setScorecards(data.getAssessmentScorecard);
+      setCurrentData(data.getAssessmentScorecard.slice(0, 1));
+    }
+  }, [data]);
+
+  const sortData = (field) => {
+    setSortField(field);
+
+    const arrayForSort = [...scorecards];
+
+    if (sortField === sortField && sortType === "asc") {
+      setSortType("desc");
+      let posts_ = arrayForSort.sort((a, b) => (a[field] < b[field] ? 1 : -1));
+      setScorecards(posts_);
+      setCurrentData(posts_.slice(0, 1));
+    } else {
+      setSortType("asc");
+      let posts_ = arrayForSort.sort((a, b) => (a[field] > b[field] ? 1 : -1));
+      setScorecards(posts_);
+      setCurrentData(posts_.slice(0, 1));
+    }
+  };
+
+  useEffect(() => {
+    if (!data || !data.getAssessmentScorecard) return;
+    setCurrentPage(1);
+    const arrayForSort = [...scorecards];
+
+    if (inputText) {
+      var newAr = arrayForSort.filter(function (applicant) {
+        return applicant.name
+          .toLocaleLowerCase()
+          .includes(inputText.toLocaleLowerCase());
+      });
+
+      setScorecards(newAr);
+    } else {
+      setCurrentData(arrayForSort.slice(0, 1));
+      setScorecards(data.getAssessmentScorecard);
+    }
+  }, [inputText]);
+
   return (
-    <table className="dataTable">
-      <colgroup>
-        <col style={{ width: "15%" }} />
-        <col style={{ width: "40%" }} />
-        <col style={{ width: "25%" }} />
-        <col style={{ width: "15%" }} />
-        <col style={{ width: "20%" }} />
-        <col style={{ width: "20%" }} />
-        <col style={{ width: "20%" }} />
-      </colgroup>
+    <>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div>
+          <span>Show</span>
+          <select className="pagination-number">
+            <option>10</option>
+            <option>10</option>
+            <option>10</option>
+            <option>10</option>
+          </select>
+          <span>entries</span>
+        </div>
 
-      <thead>
-        <tr>
-          <th scope="col">ID</th>
-          <th scope="col">Stundent Name</th>
-          <th scope="col">Score</th>
-          <th scope="col">Time</th>
-          <th scope="col">Failed</th>
-          <th scope="col">Passed</th>
-          <th scope="col">Skipped</th>
-        </tr>
-      </thead>
-      {data && data.getAssessmentScorecard ? (
-        <tbody>
-          {data.getAssessmentScorecard.map((item, index) => {
-            return (
-              <tr key={item.id} onClick={() => setAssessmentIdQuestion(item)}>
-                <td>{index + 1}</td>
-                <td>{item.name}</td>
-                <td>{item.score}</td>
-                <td>{item.time}</td>
+        <div>
+          <input
+            className="form-control"
+            type={"text"}
+            placeholder="Search"
+            onChange={(e) => setInputText(e.target.value)}
+          />
+        </div>
+      </div>
+      <table className="dataTable">
+        <colgroup>
+          <col style={{ width: "15%" }} />
+          <col style={{ width: "40%" }} />
+          <col style={{ width: "25%" }} />
+          <col style={{ width: "15%" }} />
+          <col style={{ width: "20%" }} />
+          <col style={{ width: "20%" }} />
+          <col style={{ width: "20%" }} />
+        </colgroup>
 
-                <td>{item.failed}</td>
-                <td>{item.passed}</td>
-                <td>{item.skipped}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      ) : (
-        <tbody></tbody>
-      )}
-    </table>
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col" onClick={() => sortData("name")}>
+              Stundent Name
+            </th>
+            <th scope="col" onClick={() => sortData("score")}>
+              Score
+            </th>
+            <th scope="col" onClick={() => sortData("time")}>
+              Time
+            </th>
+            <th scope="col" onClick={() => sortData("failed")}>
+              Failed
+            </th>
+            <th scope="col" onClick={() => sortData("passed")}>
+              Passed
+            </th>
+            <th scope="col" onClick={() => sortData("skipped")}>
+              Skipped
+            </th>
+          </tr>
+        </thead>
+        {scorecards && scorecards.length ? (
+          <tbody>
+            {scorecards.map((item, index) => {
+              return (
+                <tr key={item.id} onClick={() => setAssessmentIdQuestion(item)}>
+                  <td>{index + 1}</td>
+                  <td>{item.name}</td>
+                  <td>{item.score}</td>
+                  <td>{item.time}.mins</td>
+
+                  <td>{item.failed}</td>
+                  <td>{item.passed}</td>
+                  <td>{item.skipped}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        ) : (
+          <tbody></tbody>
+        )}
+      </table>
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: "20px",
+        }}
+      >
+        <div>
+          <span>Showing 10 of 20 questions</span>
+        </div>
+
+        <div className="pagination-num">
+          <span className="prev-page" onClick={() => prevPage()}>
+            &#60;
+          </span>
+          <span className="active-page">1</span>
+          <span>2</span>
+          <span className="next-page" onClick={() => nextPage()}>
+            &#62;
+          </span>
+        </div>
+      </div>
+    </>
   );
 };
 
