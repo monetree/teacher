@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Editor from "../../../../components/editor/editor";
 import QuestionContext from "../../../../context/QuestionContext";
 
@@ -56,8 +56,8 @@ const Step3 = () => {
       <div className="step3__input1 d-flex flex-column">
         <label htmlFor="fullQuestion">Question</label>
 
-        {/* <Editor /> */}
-        <textarea
+        <Editor setdata={setQuestion} />
+        {/* <textarea
           ref={questionRef}
           onChange={() => setQuestion(questionRef.current.value)}
           id="fullQuestion"
@@ -65,7 +65,7 @@ const Step3 = () => {
           rows="10"
           cols="50"
           defaultValue={questionData.step3 ? questionData.step3.question : ""}
-        ></textarea>
+        ></textarea> */}
       </div>
 
       <div className="step3__input2 w-100 d-flex align-items-center gap-5 mt-4">

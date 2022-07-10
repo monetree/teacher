@@ -1,5 +1,6 @@
 import React from "react";
 import QuestionContext from "../../../../context/QuestionContext";
+import { Interweave } from "interweave";
 
 const Step4 = ({ goto }) => {
   const { questionData } = React.useContext(QuestionContext);
@@ -72,7 +73,9 @@ const Step4 = ({ goto }) => {
       <div className="qst__title bg-white">
         <div className="info__data">
           <p>Question</p>
-          <h5>{questionData.step3.question}</h5>
+          <h5>
+            <Interweave content={window.atob(questionData.step3.question)} />
+          </h5>
         </div>
 
         <div className="edit_step ms-5">

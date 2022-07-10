@@ -1,7 +1,8 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import AssessmentContext from "../../../../context/AssessmentContext";
 import { useQuery, gql } from "@apollo/client";
+import { Interweave } from "interweave";
 
 const Step2 = () => {
   const { assessmentData, setAssessmentData } =
@@ -142,7 +143,9 @@ const Step2 = () => {
                   id={question.id}
                   onDragStart={(e) => drag(e)}
                 >
-                  <h5>{question.question_info}</h5>
+                  <h5>
+                    <Interweave content={window.atob(question.question_info)} />
+                  </h5>
                   <div className="question__item__info">
                     <p>Difficulty: {question.level}</p>
                     <p>Duration: 10</p>
@@ -181,7 +184,9 @@ const Step2 = () => {
                   onDragOver={(e) => allowDrop(e)}
                   onDragStart={(e) => drag(e)}
                 >
-                  <h5>{question.question_info}</h5>
+                  <h5>
+                    <Interweave content={window.atob(question.question_info)} />
+                  </h5>
                   <div className="question__item__info">
                     <p>Difficulty: {question.level}</p>
                     <p>Duration: 60</p>
@@ -214,7 +219,11 @@ const Step2 = () => {
               <div className="modal_info flex-grow-1">
                 <h4>Question</h4>
                 <p className="question_title">
-                  {selected !== 0 && questions[selected - 1].question_info}
+                  <Interweave
+                    content={window.atob(
+                      selected !== 0 && questions[selected - 1].question_info
+                    )}
+                  />
                 </p>
 
                 <h4 className="mb-4">Options</h4>
