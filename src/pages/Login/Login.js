@@ -43,9 +43,13 @@ const Login = () => {
   const [login, { loading: _loading2, error: _error2, data: _data2 }] =
     useMutation(LOGIN_MUTATIONS);
 
-  if (_data2 && _data2.verifyPhone && _data2.verifyPhone.id) {
-    localStorage.setItem("teacher", _data2.verifyPhone.id);
-    window.location = "/dashboard";
+  if (_data2 && _data2.verifyPhone) {
+    if (_data2.verifyPhone.id) {
+      localStorage.setItem("teacher", _data2.verifyPhone.id);
+      window.location = "/dashboard";
+    } else {
+      Toaster(3, "Phone number not exist");
+    }
   }
 
   useEffect(() => {
@@ -57,7 +61,7 @@ const Login = () => {
 
   const handleSubmit = () => {
     if (!phone) {
-      Toaster(1, "Phone required");
+      Toaster(3, "Phone required");
       return;
     }
     verifyPhone({
