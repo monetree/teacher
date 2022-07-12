@@ -6,7 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import mixpanel from "mixpanel-browser";
 
-mixpanel.init("5059fbb2bf883d77ddfb9ba1b63d398a", { debug: true });
+mixpanel.init("d8086100aeb830b0592b3fd4a5c38eee", { debug: true });
 
 const client = new ApolloClient({
   uri: "https://developer.quest/graphql?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",

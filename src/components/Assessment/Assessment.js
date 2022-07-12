@@ -16,6 +16,7 @@ const Assessment = ({ assessmentId, setAssessmentId, tab, setTab }) => {
         grade
         published
         assessment_name
+        assessment_id
         createdAt
         time
       }
@@ -69,6 +70,8 @@ const Assessment = ({ assessmentId, setAssessmentId, tab, setTab }) => {
           <thead>
             <tr>
               <th scope="col">Assessment</th>
+              <th scope="col">Assessment Id</th>
+
               <th scope="col">Subject</th>
               <th scope="col">Grade</th>
               <th scope="col">Status</th>
@@ -80,6 +83,7 @@ const Assessment = ({ assessmentId, setAssessmentId, tab, setTab }) => {
                 return (
                   <tr key={item.id} onClick={() => setAssessmentId(item)}>
                     <td>{item.assessment_name}</td>
+                    <td>{item.assessment_id}</td>
                     <td>{item.subject}</td>
                     <td>{item.grade}</td>
                     <td className="status">
