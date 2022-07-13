@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import RegisterConfirm from "./pages/Register/RegisterConfirm";
+import VerifyTeacher from "./pages/Register/VerifyTeacher";
 
 const Router = () => {
   return (
@@ -11,6 +12,7 @@ const Router = () => {
       <Route path="/" element={<Navigate to="/login" />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/register/verify" element={<VerifyTeacher />} />
       <Route path="/register/confirm" element={<RegisterConfirm />} />
       <Route path="/dashboard/*" element={<Dashboard />} />
     </Routes>
