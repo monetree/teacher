@@ -213,6 +213,7 @@ const Login = () => {
                   <input
                     type="text"
                     onChange={(e) => setPhone(e.target.value)}
+                    placeholder="+919853092550"
                   />
                 </div>
 
