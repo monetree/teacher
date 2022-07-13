@@ -172,7 +172,7 @@ const Register = () => {
     useMutation(MUTATIONS);
 
   if (_data && _data.createTeacher && _data.createTeacher.id) {
-    window.location = "/register/confirm";
+    window.location = `/register/confirm?id=${_data.createTeacher.id}`;
   }
 
   /*

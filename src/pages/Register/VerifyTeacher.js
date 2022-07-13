@@ -4,7 +4,7 @@ import { useMutation, gql } from "@apollo/client";
 const VerifyTeacher = () => {
   const MUTATIONS = gql`
     mutation verifyTeacher($id: String!) {
-      approveTeacher(id: $id) {
+      verifyTeacher(id: $id) {
         id
       }
     }
@@ -14,6 +14,8 @@ const VerifyTeacher = () => {
     useMutation(MUTATIONS);
 
   useEffect(() => {
+    const params = window.location.search;
+    const id = params.split("=")[1];
     verifyTeacher({
       variables: {
         id,

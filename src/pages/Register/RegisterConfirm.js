@@ -15,6 +15,8 @@ const RegisterConfirm = () => {
     useMutation(MUTATIONS);
 
   useEffect(() => {
+    const params = window.location.search;
+    const id = params.split("=")[1];
     approveTeacher({
       variables: {
         id,
