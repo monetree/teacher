@@ -11,7 +11,7 @@ const Login = () => {
   const [phone, setPhone] = useState(null);
   const [otp, setOtp] = useState(null);
 
-  const MUTATIONS = gql`
+  const PHONE_MUTATIONS = gql`
     mutation verifyPhone($phone: String!) {
       verifyPhone(phone: $phone) {
         id
@@ -23,11 +23,11 @@ const Login = () => {
     }
   `;
 
-  const LOGIN_MUTATIONS = gql`
-    mutation verifyPhone($phone: String!, $otp: String!) {
-      verifyPhone(phone: $phone, otp: $otp) {
+  const EMAIL_MUTATIONS = gql`
+    mutation verifyEmail($email: String!) {
+      verifyEmail(email: $email) {
         id
-        phone
+        email
         email_verified
         number_verified
         approved
@@ -35,22 +35,77 @@ const Login = () => {
     }
   `;
 
+  const LOGIN_MUTATIONS_PHONE = gql`
+    mutation loginTeacher($phone: String!, $otp: String!) {
+      loginTeacher(phone: $phone, otp: $otp) {
+        id
+      }
+    }
+  `;
+
+  const LOGIN_MUTATIONS_EMAIL = gql`
+    mutation loginTeacher($email: String!, $otp: String!) {
+      loginTeacher(email: $email, otp: $otp) {
+        id
+      }
+    }
+  `;
+
   const handleChange = (otp) => setOtp(otp);
 
   const [verifyPhone, { loading: _loading, error: _error, data: _data }] =
-    useMutation(MUTATIONS);
+    useMutation(PHONE_MUTATIONS);
 
-  const [login, { loading: _loading2, error: _error2, data: _data2 }] =
-    useMutation(LOGIN_MUTATIONS);
+  const [verifyEmail, { loading: _loading3, error: _error3, data: _data3 }] =
+    useMutation(EMAIL_MUTATIONS);
 
-  if (_data2 && _data2.verifyPhone) {
-    if (_data2.verifyPhone.id) {
-      localStorage.setItem("teacher", _data2.verifyPhone.id);
-      window.location = "/dashboard";
-    } else {
-      Toaster(3, "Phone number not exist");
+  const [loginPhone, { loading: _loading2, error: _error2, data: _data2 }] =
+    useMutation(LOGIN_MUTATIONS_PHONE);
+
+  const [loginEmail, { loading: _loading4, error: _error4, data: _data4 }] =
+    useMutation(LOGIN_MUTATIONS_EMAIL);
+
+  useEffect(() => {
+    if (_data && _data.verifyPhone) {
+      if (!_data.verifyPhone.id) {
+        Toaster(3, "Invalid mobile numner");
+        return;
+      }
     }
-  }
+  }, [_data]);
+
+  useEffect(() => {
+    if (_data3 && _data3.verifyEmail) {
+      if (!_data3.verifyEmail.id) {
+        Toaster(3, "Invalid email");
+        return;
+      }
+    }
+  }, [_data3]);
+
+  useEffect(() => {
+    if (_data2 && _data2.loginTeacher) {
+      if (_data2.loginTeacher.id) {
+        localStorage.setItem("teacher", _data2.loginTeacher.id);
+        window.location = "/dashboard";
+      } else {
+        Toaster(3, "Invalid mobile numner");
+        return;
+      }
+    }
+  }, [_data2]);
+
+  useEffect(() => {
+    if (_data4 && _data4.loginTeacher) {
+      if (_data4.loginTeacher.id) {
+        localStorage.setItem("teacher", _data4.loginTeacher.id);
+        window.location = "/dashboard";
+      } else {
+        Toaster(3, "Invalid email");
+        return;
+      }
+    }
+  }, [_data4]);
 
   useEffect(() => {
     const teacher = localStorage.getItem("teacher");
@@ -61,14 +116,45 @@ const Login = () => {
 
   const handleSubmit = () => {
     if (!phone) {
-      Toaster(3, "Phone required");
+      Toaster(3, "Phone or Email required to login");
       return;
     }
-    verifyPhone({
-      variables: {
-        phone,
-      },
-    });
+
+    const email = phone;
+
+    if (phone.includes("@")) {
+      verifyEmail({
+        variables: {
+          email,
+        },
+      });
+    } else {
+      verifyPhone({
+        variables: {
+          phone,
+        },
+      });
+    }
+  };
+
+  const handleLogin = (otp) => {
+    const email = phone;
+
+    if (phone.includes("@")) {
+      loginEmail({
+        variables: {
+          email,
+          otp,
+        },
+      });
+    } else {
+      loginPhone({
+        variables: {
+          phone,
+          otp,
+        },
+      });
+    }
   };
 
   return (
@@ -99,7 +185,8 @@ const Login = () => {
           )}
 
           <div className="top">
-            {_data && _data.verifyPhone && _data.verifyPhone.id ? (
+            {(_data && _data.verifyPhone && _data.verifyPhone.id) ||
+            (_data3 && _data3.verifyEmail && _data3.verifyEmail.id) ? (
               <>
                 <h1 className="otp-title">← Verify the OTP to Login</h1>
                 <p className="otp-msg">Enter the OTP you recieved</p>
@@ -111,17 +198,7 @@ const Login = () => {
                   separator={<span></span>}
                 />
 
-                <button
-                  className="btn-otp"
-                  onClick={() =>
-                    login({
-                      variables: {
-                        phone,
-                        otp,
-                      },
-                    })
-                  }
-                >
+                <button className="btn-otp" onClick={() => handleLogin(otp)}>
                   Verify & Continue
                 </button>
               </>
