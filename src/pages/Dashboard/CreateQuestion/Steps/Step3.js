@@ -57,30 +57,13 @@ const Step3 = () => {
         <label htmlFor="fullQuestion">Question</label>
 
         <Editor setdata={setQuestion} />
-        {/* <textarea
-          ref={questionRef}
-          onChange={() => setQuestion(questionRef.current.value)}
-          id="fullQuestion"
-          name="fullQuestion"
-          rows="10"
-          cols="50"
-          defaultValue={questionData.step3 ? questionData.step3.question : ""}
-        ></textarea> */}
       </div>
 
       <div className="step3__input2 w-100 d-flex align-items-center gap-5 mt-4">
         <div className="left w-100 d-flex flex-column">
           <label htmlFor="option1">Option 1</label>
 
-          <textarea
-            ref={option1Ref}
-            onChange={() => setOption1(option1Ref.current.value)}
-            id="option1"
-            name="option1"
-            defaultValue={
-              questionData.step3 ? questionData.step3.options[0] : ""
-            }
-          ></textarea>
+          <Editor setdata={setOption1} />
 
           <label className="markAs">
             <p
@@ -110,15 +93,7 @@ const Step3 = () => {
         <div className="right w-100 d-flex flex-column">
           <label htmlFor="option2">Option 2</label>
 
-          <textarea
-            ref={option2Ref}
-            onChange={() => setOption2(option2Ref.current.value)}
-            id="option2"
-            name="option2"
-            defaultValue={
-              questionData.step3 ? questionData.step3.options[1] : ""
-            }
-          ></textarea>
+          <Editor setdata={setOption2} />
 
           <label className="markAs">
             <p
@@ -150,15 +125,7 @@ const Step3 = () => {
         <div className="left w-100 d-flex flex-column">
           <label htmlFor="option3">Option 3</label>
 
-          <textarea
-            ref={option3Ref}
-            onChange={() => setOption3(option3Ref.current.value)}
-            id="option3"
-            name="option3"
-            defaultValue={
-              questionData.step3 ? questionData.step3.options[2] : ""
-            }
-          ></textarea>
+          <Editor setdata={setOption3} />
 
           <label className="markAs">
             <p
@@ -188,15 +155,7 @@ const Step3 = () => {
         <div className="right w-100 d-flex flex-column">
           <label htmlFor="option4">Option 4</label>
 
-          <textarea
-            ref={option4Ref}
-            onChange={() => setOption4(option4Ref.current.value)}
-            id="option4"
-            name="option4"
-            defaultValue={
-              questionData.step3 ? questionData.step3.options[3] : ""
-            }
-          ></textarea>
+          <Editor setdata={setOption4} />
 
           <label className="markAs">
             <p

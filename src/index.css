@@ -60,3 +60,16 @@ body {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
+
+.ck-editor {
+  border: 2px solid rgba(25, 25, 25, 0.2) !important;
+  border-radius: 10px !important;
+}
+
+.ck-editor__editable {
+  height: 100px !important;
+}
+
+*:focus {
+  outline: none;
+}

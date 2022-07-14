@@ -104,7 +104,9 @@ const Step4 = ({ goto }) => {
                     ? ": Marked as Answer"
                     : ""}
                 </p>
-                <h5>{option}</h5>
+                <h5>
+                  <Interweave content={window.atob(option)} />
+                </h5>
               </div>
             ))}
           </div>
