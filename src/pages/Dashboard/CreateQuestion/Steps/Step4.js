@@ -98,7 +98,7 @@ const Step4 = ({ goto }) => {
                 }
                 key={index}
               >
-                <p>
+                <p className="option_label">
                   Option {index + 1}{" "}
                   {parseInt(questionData.step3.answer) === index + 1
                     ? ": Marked as Answer"
