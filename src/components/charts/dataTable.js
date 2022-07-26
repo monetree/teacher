@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useQuery, gql } from "@apollo/client";
-import SortIcon from "../../assets/sort-solid.svg";
+import SortIcon from "../SortIcon/SortIcon";
 
 const DatatablePage = ({ assessment, setAssessmentIdQuestion }) => {
   const ASSESSMENT_SCORECARD_QUERIES = gql`
@@ -119,32 +119,44 @@ const DatatablePage = ({ assessment, setAssessmentIdQuestion }) => {
           <col style={{ width: "15%" }} />
           <col style={{ width: "40%" }} />
           <col style={{ width: "25%" }} />
-          <col style={{ width: "15%" }} />
           <col style={{ width: "20%" }} />
           <col style={{ width: "20%" }} />
           <col style={{ width: "20%" }} />
+          <col style={{ width: "25%" }} />
         </colgroup>
 
         <thead>
           <tr>
             <th scope="col">ID</th>
             <th scope="col" onClick={() => sortData("name")}>
-              Stundent Name
+              <div className="d-flex align-items-center">
+                <span className="flex-grow-1">Stundent Name</span> <SortIcon />
+              </div>
             </th>
             <th scope="col" onClick={() => sortData("score")}>
-              Score
+              <div className="d-flex align-items-center">
+                <span className="flex-grow-1">Score</span> <SortIcon />
+              </div>
             </th>
             <th scope="col" onClick={() => sortData("time")}>
-              Time
+              <div className="d-flex align-items-center">
+                <span className="flex-grow-1">Time</span> <SortIcon />
+              </div>
             </th>
             <th scope="col" onClick={() => sortData("failed")}>
-              Failed
+              <div className="d-flex align-items-center">
+                <span className="flex-grow-1">Failed</span> <SortIcon />
+              </div>
             </th>
             <th scope="col" onClick={() => sortData("passed")}>
-              Passed
+              <div className="d-flex align-items-center">
+                <span className="flex-grow-1">Passed</span> <SortIcon />
+              </div>
             </th>
             <th scope="col" onClick={() => sortData("skipped")}>
-              Skipped
+              <div className="d-flex align-items-center">
+                <span className="flex-grow-1">Skipped</span> <SortIcon />
+              </div>
             </th>
           </tr>
         </thead>

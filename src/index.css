@@ -1,75 +1,95 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&display=swap");
 
 body {
-  background: #f8fafb;
-  font-family: "Nunito", sans-serif;
+	background: #f8fafb;
+	font-family: "Nunito", sans-serif;
 }
 
 .bs-select select {
-  margin-bottom: 10px !important;
-  margin-left: 0 !important;
+	margin-bottom: 10px !important;
+	margin-left: 0 !important;
 }
 
 .table > :not(caption) > * > * {
-  box-shadow: none;
+	box-shadow: none;
 }
 
 .table-bordered > :not(caption) > * > * {
-  border-width: 0 !important;
+	border-width: 0 !important;
 }
 
 .dataTable > thead:nth-child(1) {
-  display: none;
+	display: none;
 }
 
 .sr-only {
-  display: none !important;
+	display: none !important;
 }
 
 .page-item.active .page-link {
-  border: 1px solid #f17d3a !important;
-  background: #fff !important;
-  color: #f17d3a;
-  border-radius: 4px;
-  font-weight: bold;
+	border: 1px solid #f17d3a !important;
+	background: #fff !important;
+	color: #f17d3a;
+	border-radius: 4px;
+	font-weight: bold;
 }
 
 .btn-success {
-  background: #e5fde9 !important;
-  border-radius: 30px !important;
-  color: #158a2a !important;
-  border: none !important;
+	background: #e5fde9 !important;
+	border-radius: 30px !important;
+	color: #158a2a !important;
+	border: none !important;
 }
 
 .btn-danger {
-  background: #ffebea;
-  border-radius: 30px;
-  color: #98150e;
-  border: none !important;
+	background: #ffebea;
+	border-radius: 30px;
+	color: #98150e;
+	border: none !important;
 }
 
 .btn-warning {
-  background: #fffbe3;
-  border-radius: 30px;
-  color: #836717;
-  border: none !important;
+	background: #fffbe3;
+	border-radius: 30px;
+	color: #836717;
+	border: none !important;
 }
 
 .form-control:focus {
-  border-color: inherit;
-  -webkit-box-shadow: none;
-  box-shadow: none;
+	border-color: inherit;
+	-webkit-box-shadow: none;
+	box-shadow: none;
 }
 
 .ck-editor {
-  border: 2px solid rgba(25, 25, 25, 0.2) !important;
-  border-radius: 10px !important;
+	border: 2px solid rgba(25, 25, 25, 0.2) !important;
+	border-radius: 10px !important;
 }
 
 .ck-editor__editable {
-  height: 100px !important;
+	height: 100px !important;
 }
 
 *:focus {
-  outline: none;
+	outline: none;
+}
+
+.sortIcon {
+	cursor: pointer;
+	width: 20px;
+	color: rgb(255, 190, 146);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	transition: all 0.2s ease-in-out;
+}
+
+.sortIcon ion-icon:last-of-type {
+	padding: 0;
+	margin-top: -6px;
+}
+
+.sortIcon:hover {
+	color: #f17d3a;
 }
