@@ -119,7 +119,14 @@ const Assessment = ({ assessmentId, setAssessmentId, tab, setTab }) => {
                   {" | "}
                   {new Date(
                     parseInt(assessmentId.createdAt)
-                  ).toLocaleTimeString()}
+                  ).toLocaleTimeString()}{" "}
+                  |{" "}
+                  {
+                    new Date(parseInt(assessmentId.createdAt))
+                      .toTimeString()
+                      .slice(9)
+                      .split(" ")[0]
+                  }
                 </h6>
                 <h6>
                   Assessment is {assessmentId.published ? "Published" : "Draft"}
