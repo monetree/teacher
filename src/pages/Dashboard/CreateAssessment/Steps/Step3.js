@@ -1,6 +1,7 @@
 import React from "react";
 import AssessmentContext from "../../../../context/AssessmentContext";
-import { Interweave } from "interweave";
+import MathJax from 'react-mathjax-preview'
+
 
 const Step3 = ({ goto }) => {
   const { assessmentData } = React.useContext(AssessmentContext);
@@ -61,7 +62,8 @@ const Step3 = ({ goto }) => {
           {assessmentData.step2.map((question) => (
             <div className="question__item" key={question.id}>
               <h5>
-                <Interweave content={window.atob(question.question_info)} />
+                <MathJax math={window.atob(question.question_info)} />
+
               </h5>
               <div className="question__item__info">
                 <p>Difficulty: {question.level}</p>

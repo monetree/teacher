@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 
 import AssessmentContext from "../../../../context/AssessmentContext";
 import { useQuery, gql } from "@apollo/client";
-import { Interweave } from "interweave";
+import MathJax from 'react-mathjax-preview'
+
+
 
 const Step2 = () => {
   const { assessmentData, setAssessmentData } =
@@ -144,7 +146,8 @@ const Step2 = () => {
                   onDragStart={(e) => drag(e)}
                 >
                   <h5>
-                    <Interweave content={window.atob(question.question_info)} />
+                    <MathJax math={window.atob(question.question_info)} />
+
                   </h5>
                   <div className="question__item__info">
                     <p>Difficulty: {question.level}</p>
@@ -185,7 +188,7 @@ const Step2 = () => {
                   onDragStart={(e) => drag(e)}
                 >
                   <h5>
-                    <Interweave content={window.atob(question.question_info)} />
+                    <MathJax math={window.atob(question.question_info)} />
                   </h5>
                   <div className="question__item__info">
                     <p>Difficulty: {question.level}</p>
@@ -219,11 +222,14 @@ const Step2 = () => {
               <div className="modal_info flex-grow-1">
                 <h4>Question</h4>
                 <p className="question_title">
-                  <Interweave
-                    content={window.atob(
+               
+
+<MathJax math={window.atob(
                       selected !== 0 && questions[selected - 1].question_info
-                    )}
-                  />
+                    )} />
+
+
+
                 </p>
 
                 <h4 className="mb-4">Options</h4>

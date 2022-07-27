@@ -1,6 +1,9 @@
 import React from "react";
 import QuestionContext from "../../../../context/QuestionContext";
-import { Interweave } from "interweave";
+import MathJax from 'react-mathjax-preview'
+
+
+
 
 const Step4 = ({ goto }) => {
   const { questionData } = React.useContext(QuestionContext);
@@ -74,7 +77,8 @@ const Step4 = ({ goto }) => {
         <div className="info__data">
           <p>Question</p>
           <h5>
-            <Interweave content={window.atob(questionData.step3.question)} />
+            <MathJax math={window.atob(questionData.step3.question)} />
+                  
           </h5>
         </div>
 
@@ -105,7 +109,11 @@ const Step4 = ({ goto }) => {
                     : ""}
                 </p>
                 <h5>
-                  <Interweave content={window.atob(option)} />
+
+                  <MathJax math={window.atob(option)} />
+
+                  
+
                 </h5>
               </div>
             ))}
